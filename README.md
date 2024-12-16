@@ -1,8 +1,29 @@
-# React + Vite
+#
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Aprašymas
 
-Currently, two official plugins are available:
+## Instrukcijos, kaip paleisti
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Klonuokite repozitoriją**:
+
+   ```bash
+   git clone https://github.com/Deividas-Kozlovas/to-do-list-app
+   cd to-do-list-app
+   ```
+
+2. **Įdiekite priklausomybes**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Paleiskite projektą**:
+   ```bash
+   npm run dev
+   ```
+
+## Komandos nariai ir jų atsakomybės
+
+- **Marta Lionaitė**:
+- **Deividas Kozlovas**:
+- **Aurelijus Stražnickas**:
