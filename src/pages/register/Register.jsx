@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import '../../styles/user-login/Login.scss';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import '../../styles/user-register/Register.scss';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleLogin = async (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
     
     const auth = getAuth();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Sėkmingai prisijungta, galite nukreipti naudotoją į pagrindinį puslapį arba parodyti sėkmės pranešimą
-      alert('Prisijungta sėkmingai!');
+      await createUserWithEmailAndPassword(auth, email, password);
+      // Sėkmingai užregistruota, galite nukreipti naudotoją į kitą puslapį arba parodyti sėkmės pranešimą
+      alert('Registracija sėkminga!');
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className="login-form">
-      <h2>Prisijungimas</h2>
+    <form onSubmit={handleRegister} className="registration-form">
+      <h2>Registracija</h2>
       <input 
         type="email" 
         value={email} 
@@ -37,10 +37,10 @@ const Login = () => {
         placeholder="Slaptažodis" 
         required 
       />
-      <button type="submit">Prisijungti</button>
+      <button type="submit">Registruotis</button>
       {error && <p className="error">{error}</p>}
     </form>
   );
 };
 
-export default Login;
+export default Register;
