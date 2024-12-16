@@ -1,3 +1,5 @@
+<<<<<<< Updated upstream
+=======
 // 
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
