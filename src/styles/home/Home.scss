@@ -1,0 +1,280 @@
+.home-screen {
+  background-color: #4A4A4A; 
+  font-family: 'Arial', sans-serif;
+  min-height: 98.8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: flex-start; 
+  border-radius: 8px;
+  
+  .header {
+    width: 100%;
+    justify-content: left;
+    padding: 20px 0; 
+    margin-bottom: 20px;
+    
+    h1 {
+      margin: 0;
+      margin-left: 20px;
+      color: #fff;
+      font-size: 2em;
+    }
+  }
+
+  .main-content {
+    .user-content {
+      position: absolute;
+      width: 15%;
+      height: 86.5vh;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      left: 1%;
+
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      .user-info {
+        p {
+          margin-right: 10px;
+          color: #797575; 
+        }
+      }
+
+      .logout-btn {
+        background-color: #e74c3c;
+        color: #ffffff;
+        border: none;
+        padding: 5px 15px;
+        cursor: pointer;
+        border-radius: 20px;
+
+        &:hover {
+          background-color: #c0392b;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .project-content {
+      position: absolute;
+      width: 77%;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      left: 20%;
+
+      .welcome-section {
+        margin-bottom: 20px;
+
+        h2, p {
+          text-align: center;
+        }
+      }
+
+      .projects-section {
+        .project-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          .project-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: calc(100% - 20px);
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: scale(1.02);
+            }
+
+            h3 {
+              margin-top: 0;
+              color: #2c3e50;
+            }
+
+            p {
+              color: #7f8c8d;
+            }
+
+            .project-btn {
+              background-color: #3498db;
+              color: white;
+              border: none;
+              padding: 10px 15px;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: #2980b9;
+              }
+            }
+          }
+        }
+
+        .loading {
+          text-align: center;
+          color: #7f8c8d;
+        }
+
+        .no-projects {
+          text-align: center;
+          color: #95a5a6;
+        }
+
+        .create-btn {
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          margin-top: 10px;
+          cursor: pointer;
+          border-radius: 4px;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+
+          &:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .features {
+        margin-top: 30px;
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+
+          li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 16px;
+
+            &::before {
+              content: '✓';
+              color: #4CAF50;
+              position: absolute;
+              left: 0;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      h2 {
+        color: #2c3e50;
+        font-size: 40px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #34495e;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .error {
+    color: #c0392b;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .main-content.split {
+    background-color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    min-height: 60vh;
+    max-width: 1600px;
+    text-align: center;
+    border-radius: 8px;
+    width: 100%; 
+    margin-top: auto;
+    margin-bottom: auto;
+
+    .left-section {
+      width: 120vh; 
+      height: 783px;
+      background-image: url(../../assets/images/Pens_To_Do.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 8px 0 0 8px;
+
+      h2 {
+        color: #2c3e50;
+        font-size: 40px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+    }
+
+    .right-section {
+      width: 50%; 
+      padding: 0 10px;
+
+      h2 {
+        color: #2c3e50;
+        font-size: 40px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #34495e;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .cta-buttons {
+        margin-top: 20px;
+
+        .cta-btn {
+          width: 40%;
+          background-color: #007BFF;
+          color: white;
+          border: none;
+          padding: 14px 20px;
+          margin: 10px 10px;
+          cursor: pointer;
+          border-radius: 30px;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+
+          &:active {
+            transform: scale(0.90);
+          }
+        }
+      }
+    }
+  }
+}
