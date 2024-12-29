@@ -1,5 +1,5 @@
 .home-screen {
-  background-color: #4A4A4A; 
+  background-color: #F3F0FF; 
   font-family: 'Arial', sans-serif;
   min-height: 98.8vh;
   display: flex;
@@ -73,7 +73,7 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
       padding: 20px;
       left: 20%;
-
+      
       .welcome-section {
         margin-bottom: 20px;
 
@@ -83,6 +83,10 @@
       }
 
       .projects-section {
+        h2 {
+          color: #5F33E1;
+        }
+
         .project-list {
           display: flex;
           flex-wrap: wrap;
@@ -160,6 +164,10 @@
       .features {
         margin-top: 30px;
 
+        h2 {
+          color: #5F33E1;
+        }
+
         ul {
           list-style-type: none;
           padding: 0;
@@ -182,14 +190,12 @@
       }
 
       h2 {
-        color: #2c3e50;
         font-size: 40px;
         font-weight: 600;
         margin-bottom: 20px;
       }
 
       p {
-        color: #34495e;
         font-size: 16px;
         line-height: 1.5;
       }
@@ -226,10 +232,13 @@
       border-radius: 8px 0 0 8px;
 
       h2 {
-        color: #2c3e50;
-        font-size: 40px;
+        font-size: 45px;
         font-weight: 600;
         margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 20px;
       }
     }
 
@@ -238,14 +247,13 @@
       padding: 0 10px;
 
       h2 {
-        color: #2c3e50;
+        color: #5F33E1;
         font-size: 40px;
         font-weight: 600;
         margin-bottom: 20px;
       }
 
       p {
-        color: #34495e;
         font-size: 16px;
         line-height: 1.5;
       }
@@ -255,7 +263,7 @@
 
         .cta-btn {
           width: 40%;
-          background-color: #007BFF;
+          background-color: #5F33E1;
           color: white;
           border: none;
           padding: 14px 20px;
@@ -267,7 +275,7 @@
           transition: all 0.3s ease;
 
           &:hover {
-            background-color: #0056b3;
+            background-color: #4A23B7;
           }
 
           &:active {
