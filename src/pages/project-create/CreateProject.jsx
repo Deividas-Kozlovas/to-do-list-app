@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createProject } from '../../services/ProjectServices';
+import { createProject } from '../../services/CRUDServices';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/project/Project.scss';
 

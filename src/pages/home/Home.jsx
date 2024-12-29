@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { logout } from '../../services/AuthServices';
-import { getProjects } from '../../services/ProjectServices';
+import { getProjects } from '../../services/CRUDServices';
 import '../../styles/home/Home.scss';
 import userAvatar from '../../assets/images/user-avatar.png';
 
@@ -88,7 +88,7 @@ const Home = () => {
                 {projects.map(project => (
                   <div key={project.id} className="project-card">
                     <h3>{project.Pavadinimas}</h3>
-                    <p>Project description...</p>
+                    <p>Projektas aprašymas...</p>
                     <button onClick={() => handleProjectClick(project.id)} className="project-btn">Atidaryti</button>
                   </div>
                 ))}

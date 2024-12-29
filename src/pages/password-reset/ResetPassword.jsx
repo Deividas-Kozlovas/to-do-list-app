@@ -24,7 +24,7 @@ const ResetPassword = () => {
         setError(result.error);
       }
     } catch (err) {
-      setError('Įvyko klaida bandant atkurti slaptažodį.');
+      setError(result.error);
     } finally {
       setIsLoading(false);
     }

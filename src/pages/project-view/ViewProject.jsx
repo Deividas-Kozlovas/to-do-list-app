@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/project/Project.scss';
 import '../../styles/project-view/ViewProject.scss';
-import { getProject, getTasks, createTask, updateTask, deleteTask } from '../../services/ProjectServices';
+import { getProject, getTasks, createTask, updateTask, deleteTask } from '../../services/CRUDServices';
 
 const Project = () => {
   const { projectId } = useParams();
