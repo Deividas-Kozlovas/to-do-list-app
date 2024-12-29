@@ -61,10 +61,13 @@ const Login = () => {
         </button>
         {error && <p className="error">{error}</p>}
         <div className="user-link">
+          <Link to="/reset-password">Pamirštote slaptažodį?</Link>
+        </div>
+        <div className="user-link">
           <Link to="/register">Neturite paskyros? Užsiregistruokite</Link>
         </div>
         <div className="user-link">
-          <Link to="/">Atgal</Link>
+          <Link to="/">Grižti į pagridinį puslapį</Link>
         </div>
         {isLoading && <div className="loader-container">
           <div className="loader"></div>

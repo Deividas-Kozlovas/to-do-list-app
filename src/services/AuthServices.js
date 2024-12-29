@@ -1,5 +1,5 @@
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
 
 const auth = getAuth();
 const db = getFirestore();
@@ -40,4 +40,13 @@ const logout = async () => {
   }
 };
 
-export { login, register, logout };
+const resetPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    return { success: true, };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+export { login, register, logout, resetPassword };

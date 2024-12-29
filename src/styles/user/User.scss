@@ -8,7 +8,7 @@
 }
 
 .user-form {
-  max-width: 400px;
+  width: 400px;
   margin: 10vh auto; 
   padding: 30px;
   background-color: #ffffff;
@@ -84,6 +84,13 @@
     }
   }
 }
+
+  .success {
+    color: #27ae60;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+  }
 
 .header {
   display: flex;

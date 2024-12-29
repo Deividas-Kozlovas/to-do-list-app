@@ -69,7 +69,7 @@ const Register = () => {
         <Link to="/login">Jau turite paskyrą? Prisijunkite</Link>
       </div>
       <div className="user-link">
-        <Link to="/">Atgal</Link>
+        <Link to="/">Grižti į pagridinį puslapį</Link>
       </div>
       {isLoading && <div className="loader-container">
         <div className="loader"></div>
