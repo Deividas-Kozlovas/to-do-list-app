@@ -1,5 +1,5 @@
-// AuthActipns.js (updated)
-import { login, register, logout, resetPassword } from '../services/AuthServices';
+// authActipns.js
+import { login, register, logout, resetPassword } from '../services/authServices';
 
 export const registerUser = (email, password, name) => {
   return register(email, password, name);

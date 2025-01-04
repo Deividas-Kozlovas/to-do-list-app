@@ -1,4 +1,4 @@
-// AuthReducer.js (updated)
+// authReducer.js
 const initialState = {
   user: null,
   userProfile: null,
