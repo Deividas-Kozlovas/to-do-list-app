@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/login/login.scss';
-import { loginUser } from '../../actions/AuthActions';
+import { loginUser } from '../../actions/authActions';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -45,16 +45,17 @@ const Login = () => {
 
   return (
     <div className='user-screen'>
-      <header className="header">
-        <h1>To Do List APP</h1>
+      <header className="user-screen__header">
+        <h1 className="user-screen__header-title">To Do List APP</h1>
       </header>
-      <form onSubmit={handleLogin} className="user-form">
-        <h2>Prisijungimas</h2>
+      <form onSubmit={handleLogin} className="user-screen__form">
+        <h2 className="user-screen__form-title">Prisijungimas</h2>
         <input 
           type="email" 
           name="email" 
           value={formData.email} 
           onChange={handleChange} 
+          className="user-screen__form-input"
           placeholder="El. paštas adresas" 
           required 
           disabled={isLoading}
@@ -64,27 +65,28 @@ const Login = () => {
           name="password" 
           value={formData.password} 
           onChange={handleChange} 
+          className="user-screen__form-input"
           placeholder="Slaptažodis" 
           required 
           disabled={isLoading}
         />
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="user-screen__form-button" disabled={isLoading}>
           {isLoading ? 'Prisijungiama...' : 'Prisijungti'}
         </button>
-        {error && <p className="error">{error}</p>}
-        <div className="user-link">
-          <Link to="/reset-password">Pamirštote slaptažodį?</Link>
+        {error && <p className="user-screen__form-error">{error}</p>}
+        <div className="user-screen__form-link">
+          <Link to="/reset-password" className="user-screen__form-link-link">Pamirštote slaptažodį?</Link>
         </div>
-        <div className="user-link">
-          <Link to="/register">Neturite paskyros? Užsiregistruokite</Link>
+        <div className="user-screen__form-link">
+          <Link to="/register" className="user-screen__form-link-link">Neturite paskyros? Užsiregistruokite</Link>
         </div>
-        <div className="user-link">
-          <Link to="/">Grižti į pagridinį puslapį</Link>
+        <div className="user-screen__form-link">
+          <Link to="/" className="user-screen__form-link-link">Grižti į pagridinį puslapį</Link>
         </div>
         {isLoading && (
-          <div className="loader-container">
-            <div className="loader"></div>
-            <span className="loader-text">Palaukite...</span>
+          <div className="user-screen__loader-container">
+            <div className="user-screen__loader"></div>
+            <span className="user-screen__loader-container-text">Palaukite...</span>
           </div>
         )}
       </form>

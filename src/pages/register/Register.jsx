@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/register/register.scss';
-import { registerUser } from '../../actions/AuthActions';
+import { registerUser } from '../../actions/authActions';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -46,16 +46,17 @@ const Register = () => {
 
   return (
     <div className='user-screen'>
-      <header className="header">
-        <h1>To Do List APP</h1>
+      <header className="user-screen__header">
+        <h1 className="user-screen__header-title">To Do List APP</h1>
       </header>
-      <form onSubmit={handleRegister} className="user-form">
-        <h2>Registracija</h2>
+      <form onSubmit={handleRegister} className="user-screen__form">
+        <h2 className="user-screen__form-title">Registracija</h2>
         <input 
           type="text" 
           name="name" 
           value={formData.name} 
           onChange={handleChange} 
+          className="user-screen__form-input"
           placeholder="Vardas" 
           required 
           disabled={isLoading}
@@ -65,6 +66,7 @@ const Register = () => {
           name="email" 
           value={formData.email} 
           onChange={handleChange} 
+          className="user-screen__form-input"
           placeholder="El. paštas" 
           required 
           disabled={isLoading}
@@ -74,24 +76,25 @@ const Register = () => {
           name="password" 
           value={formData.password} 
           onChange={handleChange} 
+          className="user-screen__form-input"
           placeholder="Slaptažodis" 
           required 
           disabled={isLoading}
         />
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="user-screen__form-button" disabled={isLoading}>
           {isLoading ? 'Registruojama...' : 'Registruotis'}
         </button>
-        {error && <p className="error">{error}</p>}
-        <div className="user-link">
-          <Link to="/login">Jau turite paskyrą? Prisijunkite</Link>
+        {error && <p className="user-screen__form-error">{error}</p>}
+        <div className="user-screen__form-link">
+          <Link to="/login" className="user-screen__form-link-link">Jau turite paskyrą? Prisijunkite</Link>
         </div>
-        <div className="user-link">
-          <Link to="/">Grižti į pagridinį puslapį</Link>
+        <div className="user-screen__form-link">
+          <Link to="/" className="user-screen__form-link-link">Grižti į pagridinį puslapį</Link>
         </div>
         {isLoading && (
-          <div className="loader-container">
-            <div className="loader"></div>
-            <span className="loader-text">Kraunama...</span>
+          <div className="user-screen__loader-container">
+            <div className="user-screen__loader"></div>
+            <span className="user-screen__loader-container-text">Kraunama...</span>
           </div>
         )}
       </form>

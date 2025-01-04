@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/password-reset/resetPassword.scss';
-import { resetPasswordUser } from '../../actions/AuthActions';
+import { resetPasswordUser } from '../../actions/authActions';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -32,39 +32,40 @@ const ResetPassword = () => {
 
   return (
     <div className='user-screen'>
-      <header className="header">
-        <h1>To Do List APP</h1>
+      <header className="user-screen__header">
+        <h1 className="user-screen__header-title">To Do List APP</h1>
       </header>
-        <form onSubmit={handleResetPassword} className="user-form">
-          <h2>Atkurti slaptažodį</h2>
-          <div className="form-group">
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              placeholder="El. pašto adresas" 
-              required 
-              disabled={isLoading || success}
-            />
+      <form onSubmit={handleResetPassword} className="user-screen__form">
+        <h2 className='user-screen__form-title'>Atkurti slaptažodį</h2>
+        <input 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          className="user-screen__form-input"
+          placeholder="El. pašto adresas" 
+          required 
+          disabled={isLoading || success}
+        />
+        <button type="submit" className="user-screen__form-button" disabled={isLoading || success}>
+          {isLoading ? 'Siunčiama...' : success ? 'Nurodymai išsiųsti!' : 'Atkurti slaptažodį'}
+        </button>
+        {error && <p className="user-screen__form-error">{error}</p>}
+        {success && (
+          <p className="user-screen__form-success">
+            Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti slaptažodį.
+          </p>
+        )}
+        <div className="user-screen__form-link">
+          <Link to="/login" className="user-screen__form-link-link">Grižti prie prisijungimo</Link>
+        </div>
+        {isLoading && 
+          <div className="user-screen__loader-container">
+            <div className="user-screen__loader"></div>
+            <span className="user-screen__loader-container-text">Siunčiama...</span>
           </div>
-          <button type="submit" disabled={isLoading || success}>
-            {isLoading ? 'Siunčiama...' : success ? 'Nurodymai išsiųsti!' : 'Atkurti slaptažodį'}
-          </button>
-          {error && <p className="error">{error}</p>}
-          {success && (
-            <p className="success">
-              Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti slaptažodį.
-            </p>
-          )}
-          <div className="user-link">
-            <Link to="/login">Grižti prie prisijungimo</Link>
-          </div>
-          {isLoading && <div className="loader-container">
-            <div className="loader"></div>
-            <span className="loader-text">Siunčiama...</span>
-          </div>}
-        </form>
-      </div>
+        }
+      </form>
+    </div>
   );
 };
 

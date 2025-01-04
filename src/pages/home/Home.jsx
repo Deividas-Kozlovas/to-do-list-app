@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { logout } from '../../services/AuthServices';
-import '../../styles/home/Home.scss';
+import { logout } from '../../services/authServices';
+import '../../styles/home/home.scss';
 import userAvatar from '../../assets/images/user-avatar.png';
 
 const Home = () => {
@@ -29,42 +29,42 @@ const Home = () => {
 
   return (
     <div className="home-screen">
-      <header className="header">
-        <h1>To Do List APP</h1>
+      <header className="home-screen__header">
+        <h1 className="home-screen__header-title">To Do List APP</h1>
       </header>
       
       {currentUser ? (
-        <div className="main-content">
-          <section className="user-content">
-            <div className="user-avatar-logout">
-              <img src={userAvatar} alt="Vartotojo avataras" className="user-avatar" width="50" height="50" />
+        <div className="home-screen__main-content">
+          <section className="home-screen__main-content-user-content">
+            <div className="home-screen__main-content-user-content-avatar-logout">
+              <img src={userAvatar} alt="Vartotojo avataras" className="home-screen__main-content-user-content-avatar" width="50" height="50" />
             </div>
-            <div className="user-info">
-              <p>Sveiki atvykę, {userProfile && userProfile.name ? `${userProfile.name}!` : 'Vartotojau!'}</p>
-              <button onClick={handleLogout} className="logout-btn" disabled={isLoading}>
+            <div className="home-screen__main-content-user-content-info">
+              <p className="home-screen__main-content-user-content-info-text">Sveiki atvykę, {userProfile && userProfile.name ? `${userProfile.name}!` : 'Vartotojau!'}</p>
+              <button onClick={handleLogout} className="home-screen__main-content-user-content-logout-btn" disabled={isLoading}>
                 {isLoading ? 'Atsijungiama...' : 'Atsijungti'}
               </button>
             </div>
           </section>
         </div>
       ) : (
-        <main className="main-content split">
-          <section className="left-section">
-            <h2>Sveiki atvykę į Užduočių tvarkyklę</h2>
-            <p>Čia galite efektyviai valdyti savo projektus ir užduotis.</p>
+        <main className="home-screen__main-content home-screen__main-content--split">
+          <section className="home-screen__main-content--split-left-section">
+            <h2 className="home-screen__main-content--split-left-section-title">Sveiki atvykę į Užduočių tvarkyklę</h2>
+            <p className="home-screen__main-content--split-left-section-description">Čia galite efektyviai valdyti savo projektus ir užduotis.</p>
           </section>
-
-          <section className="right-section">
-            <h2>Supaprastinkite savo darbą</h2>
-            <p>Ar norite efektyviai valdyti savo projektus ir užduotis?</p>
-            <div className="user-buttons">
+  
+          <section className="home-screen__main-content--split-right-section">
+            <h2 className="home-screen__main-content--split-right-section-title">Supaprastinkite savo darbą</h2>
+            <p className="home-screen__main-content--split-right-section-description">Ar norite efektyviai valdyti savo projektus ir užduotis?</p>
+            <div className="home-screen__main-content--split-right-section-buttons">
               <Link to="/login">
-                <button className="user-btn" disabled={isLoading}>
+                <button className="home-screen__main-content--split-right-section-buttons-button" disabled={isLoading}>
                   Prisijungti
                 </button>
               </Link>
               <Link to="/register">
-                <button className="user-btn" disabled={isLoading}>
+                <button className="home-screen__main-content--split-right-section-buttons-button" disabled={isLoading}>
                   Registruotis
                 </button>
               </Link>
@@ -73,7 +73,7 @@ const Home = () => {
         </main>
       )}
       
-      {error && <p className="error">{error}</p>}
+      {error && <p className="home-screen__error">{error}</p>}
     </div>
   );
 };

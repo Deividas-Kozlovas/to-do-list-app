@@ -1,4 +1,4 @@
-// AuthServices.js (updated)
+// authServices.js
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
 

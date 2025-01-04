@@ -1,4 +1,4 @@
-// Home.scss
+// home.scss
 .home-screen {
   background-color: #F3F0FF;
   font-family: 'Arial', sans-serif;
@@ -9,13 +9,16 @@
   justify-content: flex-start;
   border-radius: 8px;
 
-  .header {
+  &__header {
     width: 100%;
     justify-content: left;
     padding: 20px 0;
     margin-bottom: 20px;
+    background: linear-gradient(to right, #5F33E1, #3B0086);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.50);
+    border-radius: 8px 8px 0 0;
     
-    h1 {
+    &-title {
       margin: 0;
       margin-left: 20px;
       color: #fff;
@@ -23,8 +26,85 @@
     }
   }
 
-  .main-content {
-    .user-content {
+  &__main-content {
+    &--split {
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      max-width: 1600px;
+      text-align: center;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: auto;
+
+      &-left-section {
+        width: 120vh;
+        height: 783px;
+        background-image: url(../../assets/images/Pens_To_Do.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 8px 0 0 8px;
+
+        &-title {
+          font-size: 45px;
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+
+        &-description {
+          font-size: 20px;
+        }
+      }
+
+      &-right-section {
+        width: 50%;
+        padding: 0 10px;
+
+        &-title {
+          color: #5F33E1;
+          font-size: 40px;
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+
+        &-description {
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        &-buttons {
+          margin-top: 20px;
+
+          &-button {
+            width: 40%;
+            background-color: #5F33E1;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            margin: 10px 10px;
+            cursor: pointer;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+
+            &:hover {
+              background-color: #4A23B7;
+            }
+
+            &:active {
+              transform: scale(0.90);
+            }
+          }
+        }
+      }
+    }
+
+    &-user-content {
       position: absolute;
       width: 15%;
       height: 86.5vh;
@@ -34,20 +114,20 @@
       padding: 20px;
       left: 1%;
 
-      .user-avatar {
+      &-avatar {
         width: 50px;
         height: 50px;
         border-radius: 50%;
       }
 
-      .user-info {
-        p {
+      &-info {
+        &-text {
           margin-right: 10px;
           color: #797575;
         }
       }
 
-      .logout-btn {
+      &-logout-btn {
         background-color: #e74c3c;
         color: #ffffff;
         border: none;
@@ -67,87 +147,10 @@
     }
   }
 
-  .error {
+  &__error {
     color: #c0392b;
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
-  }
-
-  .main-content.split {
-    background-color: rgba(255, 255, 255, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    max-width: 1600px;
-    text-align: center;
-    border-radius: 8px;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
-
-    .left-section {
-      width: 120vh;
-      height: 783px;
-      background-image: url(../../assets/images/Pens_To_Do.jpg);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      border-radius: 8px 0 0 8px;
-
-      h2 {
-        font-size: 45px;
-        font-weight: 600;
-        margin-bottom: 20px;
-      }
-
-      p {
-        font-size: 20px;
-      }
-    }
-
-    .right-section {
-      width: 50%;
-      padding: 0 10px;
-
-      h2 {
-        color: #5F33E1;
-        font-size: 40px;
-        font-weight: 600;
-        margin-bottom: 20px;
-      }
-
-      p {
-        font-size: 16px;
-        line-height: 1.5;
-      }
-
-      .user-buttons {
-        margin-top: 20px;
-
-        .user-btn {
-          width: 40%;
-          background-color: #5F33E1;
-          color: white;
-          border: none;
-          padding: 14px 20px;
-          margin: 10px 10px;
-          cursor: pointer;
-          border-radius: 30px;
-          text-decoration: none;
-          display: inline-block;
-          transition: all 0.3s ease;
-
-          &:hover {
-            background-color: #4A23B7;
-          }
-
-          &:active {
-            transform: scale(0.90);
-          }
-        }
-      }
-    }
   }
 }
