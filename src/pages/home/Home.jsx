@@ -18,7 +18,7 @@ const Home = () => {
       alert("Atsijungimas nepavyko. Bandykite dar kartą.");
     }
   };
-  console.log(user);
+
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/login");
@@ -43,7 +43,7 @@ const Home = () => {
             </div>
             <div className="home-screen__main-content-user-content-info">
               <p className="home-screen__main-content-user-content-info-text">
-                Sveiki atvykę, {user.displayName || "Vartotojau"}!
+              Sveiki atvykę, {user.displayName ? `${user.displayName}!` : 'Vartotojau!'}
               </p>
               <button
                 onClick={handleLogout}

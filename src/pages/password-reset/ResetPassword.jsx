@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./resetPassword.scss";
-import { auth } from "../../services/AuthServices";
+import { resetPassword } from "../../services/AuthServices";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const ResetPassword = () => {
     setSuccess(false);
 
     try {
-      await auth.sendPasswordResetEmail(email);
+      await resetPassword(email);
       setSuccess(true);
     } catch (err) {
       let errorMessage = "Įvyko klaida: ";

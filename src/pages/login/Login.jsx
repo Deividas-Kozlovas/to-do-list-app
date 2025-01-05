@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./login.scss";
-import { auth, register } from "../../services/AuthServices";
+import { auth, login } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login = () => {
@@ -26,7 +26,7 @@ const Login = () => {
     setError(null);
 
     try {
-      register(formData.email, formData.password);
+      login(formData.email, formData.password);
     } catch (err) {
       let errorMessage = "Įvyko klaida: ";
       if (err.message.includes("auth/too-many-requests")) {
