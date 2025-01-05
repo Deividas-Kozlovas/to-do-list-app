@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/register/register.scss';
-import { registerUser } from '../../actions/authActions';
+import { register } from '../../services/authServices';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ const Register = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const result = await registerUser(formData.email, formData.password, formData.name);
+      const result = await register(formData.email, formData.password, formData.name);
       if (result.success) {
         navigate('/');
       } else {

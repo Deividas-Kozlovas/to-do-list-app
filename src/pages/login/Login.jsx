@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles/login/login.scss';
-import { loginUser } from '../../actions/authActions';
+import { login } from '../../services/authServices';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const result = await loginUser(formData.email, formData.password);
+      const result = await login(formData.email, formData.password);
       if (result.success) {
         navigate('/');
       } else {

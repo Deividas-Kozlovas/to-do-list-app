@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/password-reset/resetPassword.scss';
-import { resetPasswordUser } from '../../actions/authActions';
+import { resetPassword } from '../../services/authServices';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const ResetPassword = () => {
     setSuccess(false);
   
     try {
-      const result = await resetPasswordUser(email);
+      const result = await resetPassword(email);
       if (result.success) {
         setSuccess(true);
       } else {
