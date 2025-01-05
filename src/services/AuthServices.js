@@ -1,15 +1,21 @@
-// authServices.js
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
-
-const auth = getAuth();
-const db = getFirestore();
+import { db, auth } from "../firebase";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  updateProfile,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const login = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    return { success: true, user };
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return { success: true, user: userCredential.user };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -17,12 +23,23 @@ const login = async (email, password) => {
 
 const register = async (email, password, name) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const user = userCredential.user;
-    await setDoc(doc(db, "Vartotojai", user.uid), {
-      uid: user.uid,
-      name: name
+
+    await updateProfile(user, {
+      displayName: name,
     });
+
+    await setDoc(doc(db, "vartotojai", user.uid), {
+      uid: user.uid,
+      email,
+      name,
+    });
+
     return { success: true, user };
   } catch (error) {
     return { success: false, error: error.message };
@@ -41,10 +58,10 @@ const logout = async () => {
 const resetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    return { success: true, };
+    return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
   }
 };
 
-export { login, register, logout, resetPassword };
+export { auth, login, register, logout, resetPassword };

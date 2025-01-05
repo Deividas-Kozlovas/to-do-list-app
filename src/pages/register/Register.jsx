@@ -1,14 +1,14 @@
-// Register.jsx
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '../../styles/register/register.scss';
-import { register } from '../../services/authServices';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "../../styles/register/register.scss";
+import { register } from "../../services/AuthServices"; // import the correct register function
+import "./register.scss";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,85 +16,93 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleRegister = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setError(null);
+
     try {
-      const result = await register(formData.email, formData.password, formData.name);
+      const result = await register(
+        formData.email,
+        formData.password,
+        formData.name
+      );
       if (result.success) {
-        navigate('/');
+        navigate("/");
       } else {
-        let errorMessage = 'Įvyko klaida: ';
-        if (result.error.includes('auth/email-already-in-use')) {
-          errorMessage = 'Šis el. paštas jau naudojamas.';
-        } else if (result.error.includes('Password should be at least 6 characters')) {
-          errorMessage = 'Slaptažodį turi sudaryti bent 6 simboliai.';
-        } else {
-          errorMessage += result.error;
-        }
-        setError(errorMessage);
+        setError(result.error);
       }
     } catch (err) {
-      setError(err.message);
+      setError("Įvyko klaida: " + err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className='user-screen'>
+    <div className="user-screen">
       <header className="user-screen__header">
         <h1 className="user-screen__header-title">To Do List APP</h1>
       </header>
       <form onSubmit={handleRegister} className="user-screen__form">
         <h2 className="user-screen__form-title">Registracija</h2>
-        <input 
-          type="text" 
-          name="name" 
-          value={formData.name} 
-          onChange={handleChange} 
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
           className="user-screen__form-input"
-          placeholder="Vardas" 
-          required 
+          placeholder="Vardas"
+          required
           disabled={isLoading}
         />
-        <input 
-          type="email" 
-          name="email" 
-          value={formData.email} 
-          onChange={handleChange} 
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
           className="user-screen__form-input"
-          placeholder="El. paštas" 
-          required 
+          placeholder="El. paštas"
+          required
           disabled={isLoading}
         />
-        <input 
-          type="password" 
-          name="password" 
-          value={formData.password} 
-          onChange={handleChange} 
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
           className="user-screen__form-input"
-          placeholder="Slaptažodis" 
-          required 
+          placeholder="Slaptažodis"
+          required
           disabled={isLoading}
         />
-        <button type="submit" className="user-screen__form-button" disabled={isLoading}>
-          {isLoading ? 'Registruojama...' : 'Registruotis'}
+        <button
+          type="submit"
+          className="user-screen__form-button"
+          disabled={isLoading}
+        >
+          {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
         <div className="user-screen__form-link">
-          <Link to="/login" className="user-screen__form-link-link">Jau turite paskyrą? Prisijunkite</Link>
+          <Link to="/login" className="user-screen__form-link-link">
+            Jau turite paskyrą? Prisijunkite
+          </Link>
         </div>
         <div className="user-screen__form-link">
-          <Link to="/" className="user-screen__form-link-link">Grižti į pagridinį puslapį</Link>
+          <Link to="/" className="user-screen__form-link-link">
+            Grižti į pagridinį puslapį
+          </Link>
         </div>
         {isLoading && (
           <div className="user-screen__loader-container">
             <div className="user-screen__loader"></div>
-            <span className="user-screen__loader-container-text">Kraunama...</span>
+            <span className="user-screen__loader-container-text">
+              Kraunama...
+            </span>
           </div>
         )}
       </form>
