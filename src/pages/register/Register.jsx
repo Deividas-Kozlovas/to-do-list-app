@@ -43,9 +43,6 @@ const Register = () => {
 
   return (
     <div className="user-screen">
-      <header className="user-screen__header">
-        <h1 className="user-screen__header-title">To Do List APP</h1>
-      </header>
       <form onSubmit={handleRegister} className="user-screen__form">
         <h2 className="user-screen__form-title">Registracija</h2>
         <input

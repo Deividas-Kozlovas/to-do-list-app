@@ -26,10 +26,7 @@ const Home = () => {
 
   return (
     <div className="home-screen">
-      <header className="home-screen__header">
-        <h1 className="home-screen__header-title">To Do List APP</h1>
-      </header>
-      {user ? (
+      <main>
         <div className="home-screen__main-content">
           <section className="home-screen__main-content-user-content">
             <div className="home-screen__main-content-user-content-avatar-logout">
@@ -43,7 +40,8 @@ const Home = () => {
             </div>
             <div className="home-screen__main-content-user-content-info">
               <p className="home-screen__main-content-user-content-info-text">
-              Sveiki atvykę, {user.displayName ? `${user.displayName}!` : 'Vartotojau!'}
+                Sveiki atvykę,{" "}
+                {user.displayName ? `${user.displayName}!` : "Vartotojau!"}
               </p>
               <button
                 onClick={handleLogout}
@@ -53,41 +51,13 @@ const Home = () => {
               </button>
             </div>
           </section>
+          <section>
+            <Link to="/create-project">
+              <button>Prideti projekta</button>
+            </Link>
+          </section>
         </div>
-      ) : (
-        <main className="home-screen__main-content home-screen__main-content--split">
-          <section className="home-screen__main-content--split-left-section">
-            <h2 className="home-screen__main-content--split-left-section-title">
-              Sveiki atvykę į Užduočių tvarkyklę
-            </h2>
-            <p className="home-screen__main-content--split-left-section-description">
-              Čia galite efektyviai valdyti savo projektus ir užduotis.
-            </p>
-          </section>
-
-          <section className="home-screen__main-content--split-right-section">
-            <h2 className="home-screen__main-content--split-right-section-title">
-              Supaprastinkite savo darbą
-            </h2>
-            <p className="home-screen__main-content--split-right-section-description">
-              Ar norite efektyviai valdyti savo projektus ir užduotis?
-            </p>
-            <div className="home-screen__main-content--split-right-section-buttons">
-              <Link to="/login">
-                <button className="home-screen__main-content--split-right-section-buttons-button">
-                  Prisijungti
-                </button>
-              </Link>
-              <Link to="/register">
-                <button className="home-screen__main-content--split-right-section-buttons-button">
-                  Registruotis
-                </button>
-              </Link>
-            </div>
-          </section>
-        </main>
-      )}
-
+      </main>
       {error && <p className="home-screen__error">Klaida: {error.message}</p>}
     </div>
   );

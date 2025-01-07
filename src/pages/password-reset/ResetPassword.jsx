@@ -35,9 +35,6 @@ const ResetPassword = () => {
 
   return (
     <div className="user-screen">
-      <header className="user-screen__header">
-        <h1 className="user-screen__header-title">To Do List APP</h1>
-      </header>
       <form onSubmit={handleResetPassword} className="user-screen__form">
         <h2 className="user-screen__form-title">Atkurti slaptažodį</h2>
         <input
