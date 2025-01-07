@@ -12,7 +12,7 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/");
+      navigate("/login");
     } catch (logoutError) {
       console.error("Logout failed:", logoutError.message);
       alert("Atsijungimas nepavyko. Bandykite dar kartą.");
