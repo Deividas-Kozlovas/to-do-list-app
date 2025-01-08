@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { login } from "../../services/AuthServices";
+import ReCAPTCHA from "react-google-recaptcha";
 import "./login.scss";
-import { auth, login } from "../../services/AuthServices";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,9 +11,8 @@ const Login = () => {
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const navigate = useNavigate();
-
-  const [user] = useAuthState(auth);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,9 +23,13 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-
+    
     try {
-      login(formData.email, formData.password);
+      const result = await login(formData.email, formData.password);
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      navigate("/");
     } catch (err) {
       let errorMessage = "Įvyko klaida: ";
       if (err.message.includes("auth/too-many-requests")) {
@@ -42,11 +45,13 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
+  const onChange = (value) => {
+    if (value) {
+      setIsCaptchaVerified(true);
+    } else {
+      setIsCaptchaVerified(false);
     }
-  }, [user, navigate]);
+  };
 
   return (
     <div className="user-screen">
@@ -78,11 +83,15 @@ const Login = () => {
         <button
           type="submit"
           className="user-screen__form-button"
-          disabled={isLoading}
+          disabled={isLoading || !isCaptchaVerified}
         >
           {isLoading ? "Prisijungiama..." : "Prisijungti"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
+        <ReCAPTCHA className="grecaptcha-badge" 
+          sitekey="6LcIwrEqAAAAAOZnRmmCYLDR80SonOYOc58ETdiv" 
+          onChange={onChange}
+        />
         <div className="user-screen__form-link">
           <Link to="/reset-password" className="user-screen__form-link-link">
             Pamirštote slaptažodį?

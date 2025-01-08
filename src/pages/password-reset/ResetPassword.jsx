@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./resetPassword.scss";
 import { resetPassword } from "../../services/AuthServices";
+import ReCAPTCHA from "react-google-recaptcha";
+import "./resetPassword.scss";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const handleResetPassword = async (event) => {
     event.preventDefault();
@@ -33,6 +35,14 @@ const ResetPassword = () => {
     }
   };
 
+  const onChange = (value) => {
+    if (value) {
+      setIsCaptchaVerified(true);
+    } else {
+      setIsCaptchaVerified(false);
+    }
+  };
+
   return (
     <div className="user-screen">
       <header className="user-screen__header">
@@ -52,7 +62,7 @@ const ResetPassword = () => {
         <button
           type="submit"
           className="user-screen__form-button"
-          disabled={isLoading || success}
+          disabled={isLoading || success || !isCaptchaVerified}
         >
           {isLoading
             ? "Siunčiama..."
@@ -61,6 +71,10 @@ const ResetPassword = () => {
             : "Atkurti slaptažodį"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
+        <ReCAPTCHA className="grecaptcha-badge"
+          sitekey="6LcIwrEqAAAAAOZnRmmCYLDR80SonOYOc58ETdiv"
+          onChange={onChange}
+        />
         {success && (
           <p className="user-screen__form-success">
             Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti

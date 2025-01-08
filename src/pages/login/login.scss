@@ -1,4 +1,3 @@
-// login.scss
 .user-screen {
   background-color: #F3F0FF;
   font-family: 'Arial', sans-serif;
@@ -34,6 +33,12 @@
     font-family: 'Arial', sans-serif;
     margin-top: auto;
     margin-bottom: auto;
+
+    .grecaptcha-badge {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
 
     &-title {
       color: #333;
