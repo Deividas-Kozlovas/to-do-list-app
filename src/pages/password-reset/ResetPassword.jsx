@@ -4,6 +4,7 @@ import { resetPassword } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./resetPassword.scss";
 
+
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
@@ -34,6 +35,8 @@ const ResetPassword = () => {
       setIsLoading(false);
     }
   };
+
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const onChange = (value) => {
     if (value) {
@@ -71,10 +74,7 @@ const ResetPassword = () => {
             : "Atkurti slaptažodį"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
-        <ReCAPTCHA className="grecaptcha-badge"
-          sitekey="6LcIwrEqAAAAAOZnRmmCYLDR80SonOYOc58ETdiv"
-          onChange={onChange}
-        />
+        <ReCAPTCHA className="grecaptcha-badge" sitekey={RECAPTCHA_SITE_KEY} onChange={onChange}/>
         {success && (
           <p className="user-screen__form-success">
             Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti
