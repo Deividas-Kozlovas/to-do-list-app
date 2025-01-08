@@ -15,7 +15,9 @@ const login = async (email, password) => {
       email,
       password
     );
-    return { success: true, user: userCredential.user };
+    const user = userCredential.user;
+    
+    return { success: true, user };
   } catch (error) {
     return { success: false, error: error.message };
   }
