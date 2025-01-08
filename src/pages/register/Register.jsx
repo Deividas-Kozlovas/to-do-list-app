@@ -4,6 +4,7 @@ import { register } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./register.scss";
 
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -49,6 +50,8 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const onChange = (value) => {
     if (value) {
@@ -103,10 +106,7 @@ const Register = () => {
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
-        <ReCAPTCHA className="grecaptcha-badge"
-          sitekey="6LcIwrEqAAAAAOZnRmmCYLDR80SonOYOc58ETdiv" 
-          onChange={onChange}
-        />
+        <ReCAPTCHA className="grecaptcha-badge" sitekey={RECAPTCHA_SITE_KEY} onChange={onChange}/>
         <div className="user-screen__form-link">
           <Link to="/login" className="user-screen__form-link-link">
             Jau turite paskyrą? Prisijunkite
