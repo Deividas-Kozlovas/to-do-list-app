@@ -36,7 +36,9 @@ const CreateProject = () => {
 
     try {
       const result = await createProject(projectData, user.uid);
+
       if (result.success) {
+        createProjectContext({ ...projectData, id: result.id }); // Add Firestore ID to the project
         navigate("/");
       } else {
         setError(result.error);
