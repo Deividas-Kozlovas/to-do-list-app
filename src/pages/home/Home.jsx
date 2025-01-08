@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
+import { useAuthState } from "react-firebase-hooks/auth";
 import "./home.scss";
 import userAvatar from "../../assets/images/user-avatar.png";
-import { useAuthState } from "react-firebase-hooks/auth";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) navigate("/login");
+    if (!user) navigate("/");
   }, [loading, user, navigate]);
 
   return (
