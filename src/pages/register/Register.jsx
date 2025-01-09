@@ -4,6 +4,7 @@ import { register } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./register.scss";
 
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const Register = () => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-  
+
     try {
       const result = await register(
         formData.email,
@@ -40,8 +41,10 @@ const Register = () => {
       let errorMessage = "Įvyko klaida: ";
       if (err.message.includes("auth/email-already-in-use")) {
         errorMessage = "Šis el. pašto adresas jau naudojamas.";
-      } else if (err.message.includes('Password should be at least 6 characters')) {
-        errorMessage = 'Slaptažodį turi sudaryti bent 6 simboliai.';
+      } else if (
+        err.message.includes("Password should be at least 6 characters")
+      ) {
+        errorMessage = "Slaptažodį turi sudaryti bent 6 simboliai.";
       } else {
         errorMessage += err.message;
       }
@@ -50,8 +53,6 @@ const Register = () => {
       setIsLoading(false);
     }
   };
-
-  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const onChange = (value) => {
     if (value) {
@@ -106,7 +107,11 @@ const Register = () => {
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
-        <ReCAPTCHA className="grecaptcha-badge" sitekey={RECAPTCHA_SITE_KEY} onChange={onChange}/>
+        <ReCAPTCHA
+          className="grecaptcha-badge"
+          sitekey={RECAPTCHA_SITE_KEY}
+          onChange={onChange}
+        />
         <div className="user-screen__form-link">
           <Link to="/login" className="user-screen__form-link-link">
             Jau turite paskyrą? Prisijunkite

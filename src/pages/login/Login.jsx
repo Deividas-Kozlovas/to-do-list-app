@@ -4,6 +4,7 @@ import { login } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./login.scss";
 
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const result = await login(formData.email, formData.password);
       if (!result.success) {
@@ -45,8 +46,6 @@ const Login = () => {
       setIsLoading(false);
     }
   };
-
-  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const onChange = (value) => {
     if (value) {
@@ -91,7 +90,11 @@ const Login = () => {
           {isLoading ? "Prisijungiama..." : "Prisijungti"}
         </button>
         {error && <p className="user-screen__form-error">{error}</p>}
-        <ReCAPTCHA className="grecaptcha-badge" sitekey={RECAPTCHA_SITE_KEY} onChange={onChange}/>
+        <ReCAPTCHA
+          className="grecaptcha-badge"
+          sitekey={RECAPTCHA_SITE_KEY}
+          onChange={onChange}
+        />
         <div className="user-screen__form-link">
           <Link to="/reset-password" className="user-screen__form-link-link">
             Pamirštote slaptažodį?
