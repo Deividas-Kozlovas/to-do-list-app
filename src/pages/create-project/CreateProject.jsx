@@ -100,6 +100,7 @@ const CreateProject = () => {
         <button type="submit" disabled={globalLoading}>
           {globalLoading ? "Kuriama..." : "Sukurti projektą"}
         </button>
+
         {globalError && <p className="error-message">Klaida: {globalError}</p>}
       </form>
     </div>

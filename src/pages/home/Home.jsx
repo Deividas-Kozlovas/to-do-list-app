@@ -9,8 +9,13 @@ import { fetchUserProjects } from "../../services/ProjectServices";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
-  const { projects, setProjects } = useProjectContext();
+  const [user, authLoading, error] = useAuthState(auth);
+  const {
+    projects,
+    setProjects,
+    loading: projectLoading,
+    error: projectError,
+  } = useProjectContext();
 
   const handleLogout = async () => {
     try {
@@ -23,7 +28,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (loading) return;
+    if (authLoading) return;
     if (!user) navigate("/login");
 
     if (user) {
@@ -38,9 +43,9 @@ const Home = () => {
 
       getProjects();
     }
-  }, [loading, user, navigate, setProjects]);
+  }, [authLoading, user, navigate, setProjects]);
 
-  if (loading || !user) {
+  if (authLoading || !user) {
     return null;
   }
 
@@ -78,7 +83,11 @@ const Home = () => {
           </section>
           <section className="home-screen__main-content-projects">
             <h2>Projektų sąrašas</h2>
-            {projects.length > 0 ? (
+            {projectLoading ? (
+              <p>Kraunama...</p>
+            ) : projectError ? (
+              <p className="error-message">{projectError}</p>
+            ) : projects.length > 0 ? (
               <table className="projects-table">
                 <thead>
                   <tr>
@@ -105,7 +114,7 @@ const Home = () => {
           </section>
         </div>
       </main>
-      {error && <p className="home-screen__error">Klaida: {error.message}</p>}
+      {error && <p className="home-screen__error">Klaida: {error.message}</p>}{" "}
     </div>
   );
 };
