@@ -4,10 +4,13 @@ import { auth, logout } from "../../services/AuthServices";
 import "./home.scss";
 import userAvatar from "../../assets/images/user-avatar.png";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useProjectContext } from "../../context/ProjectContext";
+import { fetchUserProjects } from "../../services/ProjectServices";
 
 const Home = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
+  const { projects, setProjects } = useProjectContext();
 
   const handleLogout = async () => {
     try {
@@ -22,7 +25,24 @@ const Home = () => {
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/login");
-  }, [loading, user, navigate]);
+
+    if (user) {
+      const getProjects = async () => {
+        const result = await fetchUserProjects(user.uid);
+        if (result.success) {
+          setProjects(result.projects);
+        } else {
+          console.error("Failed to fetch projects", result.error);
+        }
+      };
+
+      getProjects();
+    }
+  }, [loading, user, navigate, setProjects]);
+
+  if (loading || !user) {
+    return null;
+  }
 
   return (
     <div className="home-screen">
@@ -53,8 +73,35 @@ const Home = () => {
           </section>
           <section>
             <Link to="/create-project">
-              <button>Prideti projekta</button>
+              <button>Pridėti projektą</button>
             </Link>
+          </section>
+          <section className="home-screen__main-content-projects">
+            <h2>Projektų sąrašas</h2>
+            {projects.length > 0 ? (
+              <table className="projects-table">
+                <thead>
+                  <tr>
+                    <th>Pavadinimas</th>
+                    <th>Aprašymas</th>
+                    <th>Pradžios data</th>
+                    <th>Pabaigos data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projects.map((project) => (
+                    <tr key={project.id}>
+                      <td>{project.name}</td>
+                      <td>{project.description || "Nenurodyta"}</td>
+                      <td>{project.startDate}</td>
+                      <td>{project.endDate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>Kol kas projektų nėra.</p>
+            )}
           </section>
         </div>
       </main>

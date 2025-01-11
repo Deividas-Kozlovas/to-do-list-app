@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../services/AuthServices";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { createProject } from "../../services/ProjectServices";
+import { createProject as createProjectService } from "../../services/ProjectServices";
+import { useProjectContext } from "../../context/ProjectContext";
 
 const CreateProject = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    createProject,
+    setLoading,
+    setError,
+    loading: globalLoading,
+    error: globalError,
+  } = useProjectContext();
 
   const [projectData, setProjectData] = useState({
     name: "",
@@ -32,13 +38,15 @@ const CreateProject = () => {
 
   const handleCreateProject = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
+
+    setLoading(true);
+    setError(null);
 
     try {
-      const result = await createProject(projectData, user.uid);
+      const result = await createProjectService(projectData, user.uid);
 
       if (result.success) {
-        createProjectContext({ ...projectData, id: result.id }); // Add Firestore ID to the project
+        createProject({ ...projectData, id: result.project.id });
         navigate("/");
       } else {
         setError(result.error);
@@ -46,7 +54,7 @@ const CreateProject = () => {
     } catch (err) {
       setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -61,7 +69,7 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Projekto pavadinimas"
           required
-          disabled={loading || isLoading}
+          disabled={globalLoading}
         />
         <input
           type="text"
@@ -69,7 +77,7 @@ const CreateProject = () => {
           value={projectData.description}
           onChange={handleChange}
           placeholder="Projekto aprašymas (nebūtina)"
-          disabled={loading || isLoading}
+          disabled={globalLoading}
         />
         <input
           type="date"
@@ -78,7 +86,7 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Pradžios data"
           required
-          disabled={loading || isLoading}
+          disabled={globalLoading}
         />
         <input
           type="date"
@@ -87,12 +95,12 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Pabaigos data"
           required
-          disabled={loading || isLoading}
+          disabled={globalLoading}
         />
-        <button type="submit" disabled={loading || isLoading}>
-          {isLoading ? "Kuriama..." : "Sukurti projektą"}
+        <button type="submit" disabled={globalLoading}>
+          {globalLoading ? "Kuriama..." : "Sukurti projektą"}
         </button>
-        {error && <p className="error-message">Klaida: {error}</p>}
+        {globalError && <p className="error-message">Klaida: {globalError}</p>}
       </form>
     </div>
   );
