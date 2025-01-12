@@ -26,6 +26,8 @@ const CreateProject = () => {
     status: false
   });
 
+  const today = new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/login");
@@ -95,6 +97,7 @@ const CreateProject = () => {
           required
           className="create-project__form-input"
           disabled={globalLoading}
+          min={today}
         />
         <label htmlFor="endDate" className="create-project__form-label">Pabaigos data:</label>
         <input
@@ -106,6 +109,7 @@ const CreateProject = () => {
           required
           className="create-project__form-input"
           disabled={globalLoading}
+          min={today}
         />
         <label htmlFor="priority" className="create-project__form-label">Prioritetas:</label>
         <select
