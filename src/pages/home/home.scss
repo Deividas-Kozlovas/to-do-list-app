@@ -1,3 +1,4 @@
+// src/pages/Home.scss
 .home {
   flex: 1;
   padding: 20px;
@@ -83,54 +84,6 @@
 
           &:hover {
             background-color: #218838;
-          }
-        }
-      }
-    }
-
-    &-list {
-      width: 100%;
-      border-collapse: collapse;
-
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #f8f9fa;
-        font-weight: bold;
-      }
-
-      tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-
-      button {
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-
-        &:first-child {
-          background-color: #007bff;
-          color: white;
-          margin-right: 5px;
-
-          &:hover {
-            background-color: #0056b3;
-          }
-        }
-
-        &:last-child {
-          background-color: #dc3545;
-          color: white;
-
-          &:hover {
-            background-color: #c82333;
           }
         }
       }

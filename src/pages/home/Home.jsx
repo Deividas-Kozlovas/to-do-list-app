@@ -4,6 +4,7 @@ import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useProjectContext } from "../../context/ProjectContext";
 import Modal from "../../components/model/Modal";
+import ProjectTable from "../../components/projectTable/ProjectTable";
 import {
   deleteProject,
   updateProjectService,
@@ -16,7 +17,6 @@ const Home = () => {
   const [user, authLoading, error] = useAuthState(auth);
   const [showModal, setShowModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
-
   const [filter, setFilter] = useState({
     name: "",
     priority: "",
@@ -153,6 +153,7 @@ const Home = () => {
             <button onClick={handleLogout}>Atsijungti</button>
           </div>
         </section>
+
         <section className="home__projects">
           <h2 className="home__projects-title">Projektų sąrašas</h2>
           <div className="home__projects-add-button">
@@ -191,50 +192,13 @@ const Home = () => {
             </select>
           </div>
 
-          {projectLoading ? (
-            <p className="home__projects-loading">Kraunama...</p>
-          ) : projectError ? (
-            <p className="home__projects-error">{projectError}</p>
-          ) : filteredProjects.length > 0 ? (
-            <table className="home__projects-list">
-              <thead>
-                <tr>
-                  <th>Pavadinimas</th>
-                  <th>Aprašymas</th>
-                  <th>Pradžios data</th>
-                  <th>Pabaigos data</th>
-                  <th>Prioritetas</th>
-                  <th>Veiksmai</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProjects.map((project) => (
-                  <tr key={project.id}>
-                    <td>{project.name}</td>
-                    <td>{project.description || "Nenurodyta"}</td>
-                    <td>{project.startDate}</td>
-                    <td>{project.endDate}</td>
-                    <td>{project.priority}</td>
-                    <td>
-                      <button
-                        onClick={() => navigate(`/edit-project/${project.id}`)}
-                      >
-                        Keisti
-                      </button>
-                      <button onClick={() => handleDeleteClick(project.id)}>
-                        Ištrinti
-                      </button>
-                      <button onClick={() => handleToggleStatus(project)}>
-                        {project.status ? "Atliktas" : "Neatliktas"}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p className="home__projects-empty">Kol kas projektų nėra.</p>
-          )}
+          <ProjectTable
+            filteredProjects={filteredProjects}
+            handleDeleteClick={handleDeleteClick}
+            handleToggleStatus={handleToggleStatus}
+            projectLoading={projectLoading}
+            projectError={projectError}
+          />
         </section>
       </main>
 
