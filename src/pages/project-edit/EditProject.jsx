@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { auth } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { fetchUserProjects, updateProject as updateProjectService } from "../../services/ProjectServices";
+import {
+  fetchUserProjects,
+  updateProject as updateProjectService,
+} from "../../services/ProjectServices";
 import { useProjectContext } from "../../context/ProjectContext";
 import "./editProject.scss";
 
@@ -27,7 +30,7 @@ const EditProject = () => {
     priority: "",
   });
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     if (loading) return;
@@ -36,7 +39,7 @@ const EditProject = () => {
     const fetchProject = async () => {
       const result = await fetchUserProjects(user.displayName);
       if (result.success) {
-        const project = result.projects.find(p => p.id === projectId);
+        const project = result.projects.find((p) => p.id === projectId);
         if (project) {
           setProjectData({
             name: project.name,
@@ -72,9 +75,11 @@ const EditProject = () => {
     try {
       const result = await updateProjectService(projectId, projectData);
       if (result.success) {
-        setProjects(projects.map(project => 
-          project.id === projectId ? { ...project, ...projectData } : project
-        ));
+        setProjects(
+          projects.map((project) =>
+            project.id === projectId ? { ...project, ...projectData } : project
+          )
+        );
         setLoading(false);
         navigate("/");
       } else {
@@ -91,7 +96,9 @@ const EditProject = () => {
     <div className="edit-project__wrapper">
       <form onSubmit={handleUpdateProject} className="edit-project__form">
         <h1 className="edit-project__form-title">Redaguoti projektą</h1>
-        <label htmlFor="name" className="edit-project__form-label">Pavadinimas:</label>
+        <label htmlFor="name" className="edit-project__form-label">
+          Pavadinimas:
+        </label>
         <input
           type="text"
           name="name"
@@ -101,7 +108,9 @@ const EditProject = () => {
           className="edit-project__form-input"
           disabled={globalLoading}
         />
-        <label htmlFor="description" className="edit-project__form-label">Aprašas:</label>
+        <label htmlFor="description" className="edit-project__form-label">
+          Aprašas:
+        </label>
         <input
           type="text"
           name="description"
@@ -110,7 +119,9 @@ const EditProject = () => {
           className="edit-project__form-input"
           disabled={globalLoading}
         />
-        <label htmlFor="startDate" className="edit-project__form-label">Pradžios data:</label>
+        <label htmlFor="startDate" className="edit-project__form-label">
+          Pradžios data:
+        </label>
         <input
           type="date"
           id="startDate"
@@ -121,7 +132,9 @@ const EditProject = () => {
           disabled={globalLoading}
           min={today}
         />
-        <label htmlFor="endDate" className="edit-project__form-label">Pabaigos data:</label>
+        <label htmlFor="endDate" className="edit-project__form-label">
+          Pabaigos data:
+        </label>
         <input
           type="date"
           id="endDate"
@@ -132,7 +145,9 @@ const EditProject = () => {
           disabled={globalLoading}
           min={today}
         />
-        <label htmlFor="priority" className="edit-project__form-label">Prioritetas:</label>
+        <label htmlFor="priority" className="edit-project__form-label">
+          Prioritetas:
+        </label>
         <select
           id="priority"
           name="priority"
@@ -141,17 +156,27 @@ const EditProject = () => {
           className="edit-project__form-select"
           disabled={globalLoading}
         >
-          <option value="" disabled>-----Prioritetas-----</option>
+          <option value="" disabled>
+            -----Prioritetas-----
+          </option>
           <option value="Žemas">Žemas</option>
           <option value="Vidutinis">Vidutinis</option>
           <option value="Aukštas">Aukštas</option>
         </select>
-        
-        <button type="submit" className="edit-project__form-button" disabled={globalLoading}>
+
+        <button
+          type="submit"
+          className="edit-project__form-button"
+          disabled={globalLoading}
+        >
           {globalLoading ? "Atnaujinama..." : "Atnaujinti projektą"}
         </button>
 
-        {globalError && <p className="edit-project__form-error-message">Klaida: {globalError}</p>}
+        {globalError && (
+          <p className="edit-project__form-error-message">
+            Klaida: {globalError}
+          </p>
+        )}
         {globalLoading && (
           <div className="edit-project__form-loading">
             <div className="edit-project__form-loading-spinner"></div>
