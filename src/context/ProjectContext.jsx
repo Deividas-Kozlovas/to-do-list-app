@@ -9,8 +9,8 @@ import {
   SET_PROJECTS,
 } from "../actions/projectActions";
 import { db } from "../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth } from "../services/AuthServices";
+import { fetchUserProjects } from "../services/ProjectServices";
 
 const initialState = {
   projects: [],
@@ -53,27 +53,18 @@ const ProjectProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const fetchUserProjects = async () => {
-      if (loading || !user) {
-        setProjects([]);
-        return;
-      }
+    if (loading || !user) return;
 
+    const loadUserProjects = async () => {
       setLoading(true);
-
       try {
-        const q = query(
-          collection(db, "Projektai"),
-          where("userName", "==", user.displayName)
-        );
-        const querySnapshot = await getDocs(q);
+        const result = await fetchUserProjects(user.uid);
 
-        const projectsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setProjects(projectsData);
+        if (result.success) {
+          setProjects(result.projects);
+        } else {
+          setError(result.error);
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -81,7 +72,7 @@ const ProjectProvider = ({ children }) => {
       }
     };
 
-    fetchUserProjects();
+    loadUserProjects();
   }, [user, loading]);
 
   return (
