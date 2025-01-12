@@ -1,3 +1,4 @@
+// ProjectContext.jsx
 import React, { useReducer, useContext, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { reducer } from "../reducer/projectReducer";
@@ -41,26 +42,25 @@ const ProjectProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserProjects = async () => {
-      if (loading) return;
-      if (!user) {
+      if (loading || !user) {
         setProjects([]);
         return;
       }
-
+  
       setLoading(true);
-
+  
       try {
         const q = query(
-          collection(db, "projects"),
-          where("userId", "==", user.uid)
+          collection(db, "Projektai"),
+          where("userName", "==", user.displayName)
         );
         const querySnapshot = await getDocs(q);
-
+  
         const projectsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-
+  
         setProjects(projectsData);
       } catch (error) {
         setError(error.message);
@@ -68,7 +68,7 @@ const ProjectProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
+  
     fetchUserProjects();
   }, [user, loading]);
 

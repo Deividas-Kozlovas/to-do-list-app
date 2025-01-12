@@ -1,11 +1,10 @@
 import { db } from "../firebase";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 
-export const createProject = async (projectData, userId) => {
+export const createProject = async (projectData) => {
   try {
-    const projectRef = await addDoc(collection(db, "projects"), {
+    const projectRef = await addDoc(collection(db, "Projektai"), {
       ...projectData,
-      userId: userId,
       createdAt: new Date(),
     });
 
@@ -15,9 +14,9 @@ export const createProject = async (projectData, userId) => {
   }
 };
 
-export const fetchUserProjects = async (userId) => {
+export const fetchUserProjects = async (userName) => {
   try {
-    const q = query(collection(db, "projects"), where("userId", "==", userId));
+    const q = query(collection(db, "Projektai"), where("userName", "==", userName));
     const querySnapshot = await getDocs(q);
 
     const projects = [];
@@ -26,6 +25,15 @@ export const fetchUserProjects = async (userId) => {
     });
 
     return { success: true, projects };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteProject = async (projectId) => {
+  try {
+    await deleteDoc(doc(db, "Projektai", projectId));
+    return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
   }
