@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { reducer } from "../reducer/projectReducer";
 import {
   CREATE_PROJECT,
+  UPDATE_PROJECT,
   DELETE_PROJECT,
   SET_LOADING,
   SET_ERROR,
@@ -23,9 +24,21 @@ const ProjectContext = React.createContext();
 const ProjectProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [user, loading] = useAuthState(auth);
-
   const createProject = (project) => {
     dispatch({ type: CREATE_PROJECT, payload: { project } });
+  };
+
+  const updateProject = async (id, updatedProjectData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await updateDoc(doc(db, "Projektai", id), updatedProjectData);
+      dispatch({ type: UPDATE_PROJECT, payload: { id, ...updatedProjectData } });
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteProject = async (id) => {
@@ -89,6 +102,7 @@ const ProjectProvider = ({ children }) => {
       value={{
         ...state,
         createProject,
+        updateProject,
         deleteProject,
         setProjects,
         setLoading,

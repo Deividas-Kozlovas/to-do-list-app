@@ -6,6 +6,7 @@ import { createProject as createProjectService } from "../../services/ProjectSer
 import { useProjectContext } from "../../context/ProjectContext";
 import "./createProject.scss";
 
+
 const CreateProject = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
@@ -23,7 +24,9 @@ const CreateProject = () => {
     startDate: "",
     endDate: "",
     priority: "",
-    status: false
+    status: false,
+    userId: "",
+    deadline: false
   });
 
   const today = new Date().toISOString().split('T')[0];
@@ -31,6 +34,12 @@ const CreateProject = () => {
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/login");
+    if (user && user.uid) {
+      setProjectData(prevData => ({
+        ...prevData,
+        userId: user.uid
+      }));
+    }
   }, [loading, user, navigate]);
 
   const handleChange = (e) => {
@@ -47,10 +56,10 @@ const CreateProject = () => {
     setError(null);
 
     try {
-      const result = await createProjectService({ ...projectData, userName: user.displayName, status: false });
+      const result = await createProjectService({ ...projectData, userName: user.displayName, userId: user.uid });
 
       if (result.success) {
-        createProject({ ...projectData, id: result.project.id, userName: user.displayName, status: false });
+        createProject({ ...projectData, id: result.project.id, userName: user.displayName, userId: user.uid });
         navigate("/");
       } else {
         setError(result.error);

@@ -69,6 +69,13 @@ const Home = () => {
     return null;
   }
 
+  const isDeadlinePassed = (endDate) => {
+    const today = new Date();
+    const end = new Date(endDate);
+    return today > end;
+  };
+
+  
   return (
     <div className="home">
       <main className="home__main">
@@ -112,7 +119,9 @@ const Home = () => {
                   <th>Aprašymas</th>
                   <th>Pradžios data</th>
                   <th>Pabaigos data</th>
+                  <th>Statusas</th>
                   <th>Prioritetas</th>
+                  <th>Terminas</th>
                   <th>Veiksmai</th>
                 </tr>
               </thead>
@@ -123,7 +132,9 @@ const Home = () => {
                     <td>{project.description || "Nenurodyta"}</td>
                     <td>{project.startDate}</td>
                     <td>{project.endDate}</td>
+                    <td>{project.status ? "Atlikta" : "Neatlikta"}</td>
                     <td>{project.priority}</td>
+                    <td>{isDeadlinePassed(project.endDate) ? "Baigta" : "Nebaigta"}</td>
                     <td>
                       <button onClick={() => navigate(`/edit-project/${project.id}`)}>Keisti</button>
                       <button onClick={() => handleDeleteProject(project.id)}>Ištrinti</button>

@@ -1,5 +1,6 @@
 import {
   CREATE_PROJECT,
+  UPDATE_PROJECT,
   DELETE_PROJECT,
   SET_LOADING,
   SET_ERROR,
@@ -14,6 +15,13 @@ export const reducer = (state, action) => {
       return {
         ...state,
         projects: [...state.projects, action.payload.project],
+      };
+    case UPDATE_PROJECT:
+      return {
+        ...state,
+        projects: state.projects.map(project =>
+        project.id === action.payload.id ? { ...project, ...action.payload } : project
+        ),
       };
     case DELETE_PROJECT:
       return {
