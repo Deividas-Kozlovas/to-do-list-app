@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ProjectProvider } from "../../context/ProjectContext";
@@ -7,6 +6,7 @@ import Login from "../../pages/login/Login";
 import ResetPassword from "../../pages/password-reset/ResetPassword";
 import Home from "../../pages/home/Home";
 import CreateProject from "../../pages/project-create/CreateProject";
+import Footer from "../footer/Footer";
 
 import "./App.scss";
 
@@ -26,6 +26,7 @@ function App() {
             <Route path="/create-project" element={<CreateProject />} />
           </Routes>
         </div>
+        <Footer />
       </Router>
     </ProjectProvider>
   );

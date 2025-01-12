@@ -25,6 +25,13 @@ body {
 .App-screen {
   background-color: #f3f0ff;
   font-family: "Arial", sans-serif;
-  min-height: 92.5vh;
+  min-height: 73vh;
   border-radius: 0 0 10px 10px;
+  display: flex;
+}
+
+@media (max-width: 850px) {
+  .App-screen {
+    display: block;
+  }
 }
