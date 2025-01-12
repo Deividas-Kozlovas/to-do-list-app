@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useProjectContext } from "../../context/ProjectContext";
 import Modal from "../../components/model/Modal";
 import ProjectTable from "../../components/projectTable/ProjectTable";
+import ProjectFilter from "../../components/projectFilter/ProjectFilter";
 import {
   deleteProject,
   updateProjectService,
@@ -114,8 +115,7 @@ const Home = () => {
     }
   };
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
+  const handleFilterChange = (name, value) => {
     setFilter((prevFilter) => ({
       ...prevFilter,
       [name]: value,
@@ -162,35 +162,7 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="home__filter">
-            <input
-              type="text"
-              name="name"
-              value={filter.name}
-              onChange={handleFilterChange}
-              placeholder="Filtruoti pagal pavadinimą"
-            />
-            <select
-              name="priority"
-              value={filter.priority}
-              onChange={handleFilterChange}
-            >
-              <option value="">Filtruoti pagal prioritetą</option>
-              <option value="Aukštas">Aukštas</option>
-              <option value="Vidutinis">Vidutinis</option>
-              <option value="Žemas">Žemas</option>
-            </select>
-            <select
-              name="status"
-              value={filter.status}
-              onChange={handleFilterChange}
-            >
-              <option value="">Filtruoti pagal statusą</option>
-              <option value="true">Atliktas</option>
-              <option value="false">Neatliktas</option>
-              <option value="all">Visi</option>
-            </select>
-          </div>
+          <ProjectFilter filter={filter} onFilterChange={handleFilterChange} />
 
           <ProjectTable
             filteredProjects={filteredProjects}
