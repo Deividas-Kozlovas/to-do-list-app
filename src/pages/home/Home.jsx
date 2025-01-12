@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; // Added useState here
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -16,6 +16,13 @@ const Home = () => {
   const [user, authLoading, error] = useAuthState(auth);
   const [showModal, setShowModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
+
+  const [filter, setFilter] = useState({
+    name: "",
+    priority: "",
+    status: "",
+  });
+
   const {
     projects,
     setProjects,
@@ -25,6 +32,26 @@ const Home = () => {
     setError,
     updateProjectStatus,
   } = useProjectContext();
+
+  const filteredProjects = projects.filter((project) => {
+    const { name, priority, status } = filter;
+    const matchesName = project.name.toLowerCase().includes(name.toLowerCase());
+
+    const matchesPriority = priority
+      ? project.priority.toLowerCase() === priority.toLowerCase()
+      : true;
+
+    const matchesStatus =
+      status === ""
+        ? project.status === false
+        : status === "true"
+        ? project.status === true
+        : status === "false"
+        ? project.status === false
+        : true;
+
+    return matchesName && matchesPriority && matchesStatus;
+  });
 
   const handleLogout = async () => {
     try {
@@ -87,6 +114,14 @@ const Home = () => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      [name]: value,
+    }));
+  };
+
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
@@ -117,7 +152,6 @@ const Home = () => {
             </p>
             <button onClick={handleLogout}>Atsijungti</button>
           </div>
-          <div className="home__actions"></div>
         </section>
         <section className="home__projects">
           <h2 className="home__projects-title">Projektų sąrašas</h2>
@@ -126,11 +160,42 @@ const Home = () => {
               <button>Pridėti projektą</button>
             </Link>
           </div>
+
+          <div className="home__filter">
+            <input
+              type="text"
+              name="name"
+              value={filter.name}
+              onChange={handleFilterChange}
+              placeholder="Filtruoti pagal pavadinimą"
+            />
+            <select
+              name="priority"
+              value={filter.priority}
+              onChange={handleFilterChange}
+            >
+              <option value="">Filtruoti pagal prioritetą</option>
+              <option value="Aukštas">Aukštas</option>
+              <option value="Vidutinis">Vidutinis</option>
+              <option value="Žemas">Žemas</option>
+            </select>
+            <select
+              name="status"
+              value={filter.status}
+              onChange={handleFilterChange}
+            >
+              <option value="">Filtruoti pagal statusą</option>
+              <option value="true">Atliktas</option>
+              <option value="false">Neatliktas</option>
+              <option value="all">Visi</option>
+            </select>
+          </div>
+
           {projectLoading ? (
             <p className="home__projects-loading">Kraunama...</p>
           ) : projectError ? (
             <p className="home__projects-error">{projectError}</p>
-          ) : projects.length > 0 ? (
+          ) : filteredProjects.length > 0 ? (
             <table className="home__projects-list">
               <thead>
                 <tr>
@@ -143,7 +208,7 @@ const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                   <tr key={project.id}>
                     <td>{project.name}</td>
                     <td>{project.description || "Nenurodyta"}</td>
@@ -170,17 +235,9 @@ const Home = () => {
           ) : (
             <p className="home__projects-empty">Kol kas projektų nėra.</p>
           )}
-          <section className="home__features">
-            <h2>Funkcijos, kurios palengvina jūsų darbą:</h2>
-            <ul>
-              <li>Intuityvus projektų valdymas</li>
-              <li>Užduočių prioritetų nustatymas</li>
-              <li>Terminų sekimas</li>
-              <li>Bendradarbiavimas su komanda</li>
-            </ul>
-          </section>
         </section>
       </main>
+
       {showModal && (
         <Modal
           message="Ar tikrai norite istrinti uzduoti?"
@@ -188,6 +245,7 @@ const Home = () => {
           onCancel={handleCancelDelete}
         />
       )}
+
       {error && <p className="home__error">Klaida: {error}</p>}
     </div>
   );
