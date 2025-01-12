@@ -1,5 +1,13 @@
 import { db } from "../firebase";
-import { addDoc, collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 export const createProject = async (projectData) => {
   try {
@@ -16,7 +24,10 @@ export const createProject = async (projectData) => {
 
 export const fetchUserProjects = async (userName) => {
   try {
-    const q = query(collection(db, "Projektai"), where("userName", "==", userName));
+    const q = query(
+      collection(db, "Projektai"),
+      where("userName", "==", userName)
+    );
     const querySnapshot = await getDocs(q);
 
     const projects = [];

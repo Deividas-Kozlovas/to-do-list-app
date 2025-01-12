@@ -28,6 +28,7 @@ const Login = () => {
 
     try {
       await login(formData.email, formData.password);
+      navigate("/");
     } catch (err) {
       let errorMessage = "Įvyko klaida: ";
       if (err.message.includes("auth/too-many-requests")) {
