@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { createProject as createProjectService } from "../../services/ProjectServices";
 import { useProjectContext } from "../../context/ProjectContext";
+import "./createProject.scss";
 
 const CreateProject = () => {
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const CreateProject = () => {
   }, [loading, user, navigate]);
 
   const handleChange = (e) => {
-    e.preventDefault();
     setProjectData({
       ...projectData,
       [e.target.name]: e.target.value,
@@ -43,10 +43,10 @@ const CreateProject = () => {
     setError(null);
 
     try {
-      const result = await createProjectService(projectData, user.uid);
+      const result = await createProjectService({ ...projectData, userName: user.displayName });
 
       if (result.success) {
-        createProject({ ...projectData, id: result.project.id });
+        createProject({ ...projectData, id: result.project.id, userName: user.displayName });
         navigate("/");
       } else {
         setError(result.error);
@@ -59,9 +59,9 @@ const CreateProject = () => {
   };
 
   return (
-    <div className="create-project-screen">
-      <h1>Sukurti naują projektą</h1>
-      <form onSubmit={handleCreateProject} className="create-project-form">
+    <div className="create-project__wrapper">
+      <form onSubmit={handleCreateProject} className="create-project__form">
+      <h1 className="create-project__form-title">Sukurti naują projektą</h1>
         <input
           type="text"
           name="name"
@@ -69,6 +69,7 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Projekto pavadinimas"
           required
+          className="create-project__form-input"
           disabled={globalLoading}
         />
         <input
@@ -77,6 +78,7 @@ const CreateProject = () => {
           value={projectData.description}
           onChange={handleChange}
           placeholder="Projekto aprašymas (nebūtina)"
+          className="create-project__form-input"
           disabled={globalLoading}
         />
         <input
@@ -86,6 +88,7 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Pradžios data"
           required
+          className="create-project__form-input"
           disabled={globalLoading}
         />
         <input
@@ -95,13 +98,22 @@ const CreateProject = () => {
           onChange={handleChange}
           placeholder="Pabaigos data"
           required
+          className="create-project__form-input"
           disabled={globalLoading}
         />
-        <button type="submit" disabled={globalLoading}>
+        <button type="submit" className="create-project__form-button" disabled={globalLoading}>
           {globalLoading ? "Kuriama..." : "Sukurti projektą"}
         </button>
-
-        {globalError && <p className="error-message">Klaida: {globalError}</p>}
+  
+        {globalError && <p className="create-project__form-error-message">Klaida: {globalError}</p>}
+        {globalLoading && (
+            <div className="reset-password__form-loading">
+              <div className="reset-password__form-loading-spinner"></div>
+              <span className="reset-password__form-loading-text">
+                Kuriama...
+              </span>
+            </div>
+          )}
       </form>
     </div>
   );
