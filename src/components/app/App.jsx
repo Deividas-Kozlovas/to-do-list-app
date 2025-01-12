@@ -1,26 +1,30 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ProjectProvider } from "../../context/ProjectContext";
 import Register from "../../pages/register/Register";
 import Login from "../../pages/login/Login";
 import ResetPassword from "../../pages/password-reset/ResetPassword";
 import Home from "../../pages/home/Home";
-import CreateProject from "../../pages/create-project/CreateProject";
-import { ProjectProvider } from "../../context/ProjectContext";
+import CreateProject from "../../pages/project-create/CreateProject";
+
+import "./app.scss"
 
 function App() {
   return (
     <ProjectProvider>
       <Router>
-        <header className="home-screen__header">
-          <h1 className="home-screen__header-title">To Do List APP</h1>
+        <header className="App-header">
+          <h1 className="App-header-title">To Do List APP</h1>
         </header>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create-project" element={<CreateProject />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Routes>
+        <div className="App-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/create-project" element={<CreateProject />} />
+          </Routes>
+        </div>
       </Router>
     </ProjectProvider>
   );

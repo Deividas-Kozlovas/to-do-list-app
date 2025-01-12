@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { register } from "../../services/AuthServices";
 import "./register.scss";
 
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -42,15 +43,15 @@ const Register = () => {
   };
 
   return (
-    <div className="user-screen">
-      <form onSubmit={handleRegister} className="user-screen__form">
-        <h2 className="user-screen__form-title">Registracija</h2>
+    <div className="register__wrapper">
+      <form onSubmit={handleRegister} className="register__form">
+        <h2 className="register__form-title">Registracija</h2>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="Vardas"
           required
           disabled={isLoading}
@@ -60,7 +61,7 @@ const Register = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="El. paštas"
           required
           disabled={isLoading}
@@ -70,33 +71,33 @@ const Register = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="Slaptažodis"
           required
           disabled={isLoading}
         />
         <button
           type="submit"
-          className="user-screen__form-button"
+          className="register__form-button"
           disabled={isLoading}
         >
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
-        {error && <p className="user-screen__form-error">{error}</p>}
-        <div className="user-screen__form-link">
-          <Link to="/login" className="user-screen__form-link-link">
+        {error && <p className="register__form-error">{error}</p>}
+        <div>
+          <Link to="/login" className="register__form-link">
             Jau turite paskyrą? Prisijunkite
           </Link>
         </div>
-        <div className="user-screen__form-link">
-          <Link to="/" className="user-screen__form-link-link">
+        <div>
+          <Link to="/" className="register__form-link">
             Grižti į pagridinį puslapį
           </Link>
         </div>
         {isLoading && (
-          <div className="user-screen__loader-container">
-            <div className="user-screen__loader"></div>
-            <span className="user-screen__loader-container-text">
+          <div className="register__form-loading">
+            <div className="register__form-loading-spinner"></div>
+            <span className="register__form-loading-text">
               Kraunama...
             </span>
           </div>
