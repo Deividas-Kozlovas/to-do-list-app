@@ -8,10 +8,14 @@ import {
   SET_ERROR,
   SET_PROJECTS,
   UPDATE_STATUS,
+  UPDATE_PROJECT,
 } from "../actions/projectActions";
 import { db } from "../firebase";
 import { auth } from "../services/AuthServices";
-import { fetchUserProjects } from "../services/ProjectServices";
+import {
+  fetchUserProjects,
+  updateProjectService,
+} from "../services/ProjectServices";
 
 const initialState = {
   projects: [],
@@ -31,14 +35,21 @@ const ProjectProvider = ({ children }) => {
 
   const deleteProject = async (id) => {
     try {
-      setLoading(true);
+      dispatch({ type: SET_LOADING, payload: true });
       await deleteDoc(doc(db, "Projektai", id));
       dispatch({ type: DELETE_PROJECT, payload: id });
     } catch (error) {
-      setError(error.message);
+      dispatch({ type: SET_ERROR, payload: error.message });
     } finally {
-      setLoading(false);
+      dispatch({ type: SET_LOADING, payload: false });
     }
+  };
+
+  const updateProject = (projectId, updatedProjectData) => {
+    dispatch({
+      type: "UPDATE_PROJECT",
+      payload: { projectId, updatedProjectData },
+    });
   };
 
   const updateProjectStatus = (projectId, status) => {
@@ -64,19 +75,18 @@ const ProjectProvider = ({ children }) => {
     if (loading || !user) return;
 
     const loadUserProjects = async () => {
-      setLoading(true);
+      dispatch({ type: SET_LOADING, payload: true });
       try {
         const result = await fetchUserProjects(user.uid);
-
         if (result.success) {
           setProjects(result.projects);
         } else {
-          setError(result.error);
+          dispatch({ type: SET_ERROR, payload: result.error });
         }
       } catch (error) {
-        setError(error.message);
+        dispatch({ type: SET_ERROR, payload: error.message });
       } finally {
-        setLoading(false);
+        dispatch({ type: SET_LOADING, payload: false });
       }
     };
 
@@ -88,6 +98,7 @@ const ProjectProvider = ({ children }) => {
       value={{
         ...state,
         createProject,
+        updateProject,
         deleteProject,
         updateProjectStatus,
         setProjects,

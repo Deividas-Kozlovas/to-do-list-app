@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { register } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
-import "./register.scss";
+import "./Register.scss";
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
@@ -117,9 +117,7 @@ const Register = () => {
         {isLoading && (
           <div className="register__form-loading">
             <div className="register__form-loading-spinner"></div>
-            <span className="register__form-loading-text">
-              Kraunama...
-            </span>
+            <span className="register__form-loading-text">Kraunama...</span>
           </div>
         )}
       </form>

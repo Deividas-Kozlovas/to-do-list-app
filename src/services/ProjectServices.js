@@ -63,15 +63,11 @@ export const deleteProject = async (projectId) => {
   }
 };
 
-export const updateProjectService = async (projectId, newStatus) => {
+export const updateProjectService = async (projectId, updatedProjectData) => {
   try {
-    const projectRef = doc(db, "Projektai", projectId);
-    await updateDoc(projectRef, {
-      status: newStatus,
-    });
+    await updateDoc(doc(db, "Projektai", projectId), updatedProjectData);
     return { success: true };
   } catch (error) {
-    console.error("Error updating project status: ", error);
     return { success: false, error: error.message };
   }
 };

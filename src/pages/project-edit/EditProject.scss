@@ -1,0 +1,110 @@
+.edit-project {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  &__form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    margin: 0 auto;
+
+    &-title {
+      text-align: center;
+      color: #333;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+
+    &-label {
+      display: block;
+      margin-left: 10px;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &-input,
+    &-select {
+      width: 100%;
+      padding: 12px 20px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      box-sizing: border-box;
+      font-size: 16px;
+      appearance: none;
+
+      &:focus {
+        outline: none;
+        border-color: #5f33e1;
+        box-shadow: 0 0 5px rgba(95, 51, 225, 0.5);
+      }
+    }
+
+    &-button {
+      width: 100%;
+      background-color: #5f33e1;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      margin: 25px 0;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #4a23b7;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+
+    &-error-message {
+      color: #ff0000;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    &-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+
+      &-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #5f33e1;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto 0;
+      }
+
+      &-text {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+// Jei norite naudoti tą pačią animaciją:
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

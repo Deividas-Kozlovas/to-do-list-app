@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/AuthServices";
 import ReCAPTCHA from "react-google-recaptcha";
-import "./login.scss";
+import "./Login.scss";
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
@@ -102,9 +102,7 @@ const Login = () => {
         {isLoading && (
           <div className="login__form-loading">
             <div className="login__form-loading-spinner"></div>
-            <span className="login__form-loading-text">
-              Palaukite...
-            </span>
+            <span className="login__form-loading-text">Palaukite...</span>
           </div>
         )}
       </form>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { createProjectService } from "../../services/ProjectServices";
 import { useProjectContext } from "../../context/ProjectContext";
-import "./createProject.scss";
+import "./CreateProject.scss";
 
 const CreateProject = () => {
   const navigate = useNavigate();

@@ -11,7 +11,7 @@ import {
   updateProjectService,
 } from "../../services/ProjectServices";
 import userAvatar from "../../assets/images/user-avatar.png";
-import "./home.scss";
+import "./Home.scss";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -36,7 +36,10 @@ const Home = () => {
 
   const filteredProjects = projects.filter((project) => {
     const { name, priority, status } = filter;
-    const matchesName = project.name.toLowerCase().includes(name.toLowerCase());
+
+    const matchesName =
+      project.name &&
+      project.name.toLowerCase().includes((name || "").toLowerCase());
 
     const matchesPriority = priority
       ? project.priority.toLowerCase() === priority.toLowerCase()
@@ -102,7 +105,11 @@ const Home = () => {
     setError(null);
 
     try {
-      const result = await updateProjectService(project.id, newStatus);
+      const updatedProjectData = {
+        status: newStatus,
+      };
+
+      const result = await updateProjectService(project.id, updatedProjectData);
       if (result.success) {
         updateProjectStatus(project.id, newStatus);
       } else {

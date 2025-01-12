@@ -7,12 +7,17 @@ export const reducer = (state, action) => {
     case "SET_PROJECTS":
       return { ...state, projects: action.payload };
     case "CREATE_PROJECT":
-      return { ...state, projects: [...state.projects, action.payload] };
-    case "DELETE_PROJECT":
       return {
         ...state,
-        projects: state.projects.filter(
-          (project) => project.id !== action.payload
+        projects: [...state.projects, action.payload.project],
+      };
+    case "UPDATE_PROJECT":
+      return {
+        ...state,
+        projects: state.projects.map((project) =>
+          project.id === action.payload.projectId
+            ? { ...project, ...action.payload.updatedProjectData }
+            : project
         ),
       };
     case "UPDATE_STATUS":

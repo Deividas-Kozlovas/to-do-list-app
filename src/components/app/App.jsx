@@ -7,6 +7,7 @@ import ResetPassword from "../../pages/password-reset/ResetPassword";
 import Home from "../../pages/home/Home";
 import CreateProject from "../../pages/project-create/CreateProject";
 import Footer from "../footer/Footer";
+import EditProject from "../../pages/project-edit/EditProject";
 
 import "./App.scss";
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/create-project" element={<CreateProject />} />
+            <Route path="/edit-project/:projectId" element={<EditProject />} />
           </Routes>
         </div>
         <Footer />
