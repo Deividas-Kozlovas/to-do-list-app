@@ -70,22 +70,19 @@ const EditProject = () => {
         userId: user.uid,
       };
 
-      // Call the updateProjectService to update the project in Firestore
       const result = await updateProjectService(projectId, updatedProjectData);
 
       if (result.success) {
-        // Update the project in the context if Firestore update was successful
         updateProject(projectId, updatedProjectData);
 
-        // Navigate to the home page after successful update
         navigate("/");
       } else {
-        setError(result.error); // Set error if the update failed
+        setError(result.error);
       }
     } catch (err) {
-      setError(err.message); // Set error if there was an unexpected error
+      setError(err.message);
     } finally {
-      setLoading(false); // Set loading to false after operation finishes
+      setLoading(false);
     }
   };
 
