@@ -22,6 +22,8 @@ const CreateProject = () => {
     description: "",
     startDate: "",
     endDate: "",
+    priority: "",
+    status: false
   });
 
   useEffect(() => {
@@ -43,10 +45,10 @@ const CreateProject = () => {
     setError(null);
 
     try {
-      const result = await createProjectService({ ...projectData, userName: user.displayName });
+      const result = await createProjectService({ ...projectData, userName: user.displayName, status: false });
 
       if (result.success) {
-        createProject({ ...projectData, id: result.project.id, userName: user.displayName });
+        createProject({ ...projectData, id: result.project.id, userName: user.displayName, status: false });
         navigate("/");
       } else {
         setError(result.error);
@@ -61,7 +63,8 @@ const CreateProject = () => {
   return (
     <div className="create-project__wrapper">
       <form onSubmit={handleCreateProject} className="create-project__form">
-      <h1 className="create-project__form-title">Sukurti naują projektą</h1>
+        <h1 className="create-project__form-title">Sukurti naują projektą</h1>
+        <label htmlFor="name" className="create-project__form-label">Pavadinimas:</label>
         <input
           type="text"
           name="name"
@@ -72,48 +75,66 @@ const CreateProject = () => {
           className="create-project__form-input"
           disabled={globalLoading}
         />
+        <label htmlFor="description" className="create-project__form-label">Aprašymas:</label>
         <input
           type="text"
           name="description"
           value={projectData.description}
           onChange={handleChange}
-          placeholder="Projekto aprašymas (nebūtina)"
+          placeholder="Projekto aprašas (nebūtina)"
           className="create-project__form-input"
           disabled={globalLoading}
         />
+        <label htmlFor="startDate" className="create-project__form-label">Pradžios data:</label>
         <input
           type="date"
+          id="startDate"
           name="startDate"
           value={projectData.startDate}
           onChange={handleChange}
-          placeholder="Pradžios data"
           required
           className="create-project__form-input"
           disabled={globalLoading}
         />
+        <label htmlFor="endDate" className="create-project__form-label">Pabaigos data:</label>
         <input
           type="date"
+          id="endDate"
           name="endDate"
           value={projectData.endDate}
           onChange={handleChange}
-          placeholder="Pabaigos data"
           required
           className="create-project__form-input"
           disabled={globalLoading}
         />
+        <label htmlFor="priority" className="create-project__form-label">Prioritetas:</label>
+        <select
+          id="priority"
+          name="priority"
+          value={projectData.priority}
+          onChange={handleChange}
+          required
+          className="create-project__form-select"
+        >
+          <option value="" disabled selected>-----Prioritetas-----</option>
+          <option value="Žemas">Žemas</option>
+          <option value="Vidutinis">Vidutinis</option>
+          <option value="Aukštas">Aukštas</option>
+        </select>
+        
         <button type="submit" className="create-project__form-button" disabled={globalLoading}>
           {globalLoading ? "Kuriama..." : "Sukurti projektą"}
         </button>
-  
+
         {globalError && <p className="create-project__form-error-message">Klaida: {globalError}</p>}
         {globalLoading && (
-            <div className="reset-password__form-loading">
-              <div className="reset-password__form-loading-spinner"></div>
-              <span className="reset-password__form-loading-text">
-                Kuriama...
-              </span>
-            </div>
-          )}
+          <div className="create-project__form-loading">
+            <div className="create-project__form-loading-spinner"></div>
+            <span className="create-project__form-loading-text">
+              Kuriama...
+            </span>
+          </div>
+        )}
       </form>
     </div>
   );

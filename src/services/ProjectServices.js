@@ -14,6 +14,7 @@ export const createProject = async (projectData) => {
     const projectRef = await addDoc(collection(db, "Projektai"), {
       ...projectData,
       createdAt: new Date(),
+      status: false
     });
 
     return { success: true, project: { ...projectData, id: projectRef.id } };
