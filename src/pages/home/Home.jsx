@@ -3,7 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useProjectContext } from "../../context/ProjectContext";
-import { deleteProject } from "../../services/ProjectServices";
+import {
+  deleteProject,
+  updateProjectService,
+} from "../../services/ProjectServices";
 import userAvatar from "../../assets/images/user-avatar.png";
 import "./home.scss";
 
@@ -17,6 +20,7 @@ const Home = () => {
     error: projectError,
     setLoading,
     setError,
+    updateProjectStatus,
   } = useProjectContext();
 
   const handleLogout = async () => {
@@ -37,6 +41,25 @@ const Home = () => {
       const result = await deleteProject(projectId);
       if (result.success) {
         setProjects(projects.filter((project) => project.id !== projectId));
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleToggleStatus = async (project) => {
+    const newStatus = !project.status;
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await updateProjectService(project.id, newStatus);
+      if (result.success) {
+        updateProjectStatus(project.id, newStatus);
       } else {
         setError(result.error);
       }
@@ -118,6 +141,9 @@ const Home = () => {
                       </button>
                       <button onClick={() => handleDeleteProject(project.id)}>
                         Ištrinti
+                      </button>
+                      <button onClick={() => handleToggleStatus(project)}>
+                        {project.status ? "Atliktas" : "Neatliktas"}
                       </button>
                     </td>
                   </tr>

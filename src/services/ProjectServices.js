@@ -7,6 +7,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 
 export const createProjectService = async (projectData, userId) => {
@@ -58,6 +59,19 @@ export const deleteProject = async (projectId) => {
     await deleteDoc(doc(db, "Projektai", projectId));
     return { success: true };
   } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+export const updateProjectService = async (projectId, newStatus) => {
+  try {
+    const projectRef = doc(db, "Projektai", projectId);
+    await updateDoc(projectRef, {
+      status: newStatus,
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating project status: ", error);
     return { success: false, error: error.message };
   }
 };

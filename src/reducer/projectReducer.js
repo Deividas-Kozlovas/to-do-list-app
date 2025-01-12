@@ -4,6 +4,7 @@ import {
   SET_LOADING,
   SET_ERROR,
   SET_PROJECTS,
+  UPDATE_STATUS,
 } from "../actions/projectActions";
 
 export const reducer = (state, action) => {
@@ -20,6 +21,15 @@ export const reducer = (state, action) => {
         ...state,
         projects: state.projects.filter(
           (project) => project.id !== action.payload
+        ),
+      };
+    case UPDATE_STATUS:
+      return {
+        ...state,
+        projects: state.projects.map((project) =>
+          project.id === action.payload.projectId
+            ? { ...project, status: action.payload.status }
+            : project
         ),
       };
     case SET_LOADING:

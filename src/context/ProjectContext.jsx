@@ -7,6 +7,7 @@ import {
   SET_LOADING,
   SET_ERROR,
   SET_PROJECTS,
+  UPDATE_STATUS,
 } from "../actions/projectActions";
 import { db } from "../firebase";
 import { auth } from "../services/AuthServices";
@@ -38,6 +39,13 @@ const ProjectProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateProjectStatus = (projectId, status) => {
+    dispatch({
+      type: UPDATE_STATUS,
+      payload: { projectId, status },
+    });
   };
 
   const setProjects = (projects) => {
@@ -81,6 +89,7 @@ const ProjectProvider = ({ children }) => {
         ...state,
         createProject,
         deleteProject,
+        updateProjectStatus,
         setProjects,
         setLoading,
         setError,
