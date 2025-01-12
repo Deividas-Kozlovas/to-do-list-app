@@ -134,7 +134,7 @@ const CreateProject = () => {
           required
           className="create-project__form-select"
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             -----Prioritetas-----
           </option>
           <option value="Žemas">Žemas</option>

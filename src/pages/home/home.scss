@@ -1,15 +1,20 @@
-// src/pages/Home.scss
 .home {
   flex: 1;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 
   &__main {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     height: 100%;
     width: 100%;
+
+    @media (max-width: 860px) {
+      display: block;
+    }
   }
 
   &__user-section {
@@ -20,11 +25,25 @@
     padding: 10px;
     overflow-y: auto;
 
+    @media (max-width: 860px) {
+      width: auto;
+      margin: 0 0 20px 0;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     &-avatar {
       margin-right: 20px;
 
       img {
         border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+
+      @media (max-width: 860px) {
+        margin-right: 0;
+        margin-bottom: 10px;
       }
     }
 
@@ -49,16 +68,16 @@
     }
   }
 
-  &__actions {
-    display: none;
-  }
-
   &__projects {
     width: 85%;
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
     padding: 20px;
     overflow-y: auto;
+
+    @media (max-width: 860px) {
+      width: auto;
+    }
 
     &-title {
       margin-top: 0;
@@ -105,33 +124,5 @@
   &__projects-empty {
     font-style: italic;
     color: #ccc;
-  }
-
-  &__features {
-    margin-top: 30px;
-
-    h2 {
-      color: #5f33e1;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-
-      li {
-        margin: 10px 0;
-        padding-left: 20px;
-        position: relative;
-        font-size: 16px;
-
-        &::before {
-          content: "✓";
-          color: #4caf50;
-          position: absolute;
-          left: 0;
-          font-weight: bold;
-        }
-      }
-    }
   }
 }

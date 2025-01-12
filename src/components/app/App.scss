@@ -1,31 +1,30 @@
 body {
   margin: 10px;
   padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #FFFFFF;
+  font-family: "Arial", sans-serif;
+  background-color: #ffffff;
 }
 
 .App-header {
   position: relative;
   display: flex;
-  justify-content: flex-start; 
-  align-items: center; 
+  justify-content: flex-start;
+  align-items: center;
   padding: 20px;
-  background: linear-gradient(to right, #5F33E1, #3B0086);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.50);
+  background: linear-gradient(to right, #5f33e1, #3b0086);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px 10px 0 0;
-  
+
   &-title {
     margin: 0;
-    color: #fff; 
+    color: #fff;
     font-size: 2em;
   }
 }
 
 .App-screen {
-  background-color: #F3F0FF;
-  font-family: 'Arial', sans-serif;
+  background-color: #f3f0ff;
+  font-family: "Arial", sans-serif;
   min-height: 92.5vh;
   border-radius: 0 0 10px 10px;
-  display: flex;
 }
