@@ -2,94 +2,152 @@ import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./home.scss";
-import userAvatar from "../../assets/images/user-avatar.png";
 
+import { useProjectContext } from "../../context/ProjectContext";
+import {
+  fetchUserProjects,
+  deleteProject,
+} from "../../services/ProjectServices";
+import userAvatar from "../../assets/images/user-avatar.png";
+import "./home.scss";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  const [user, authLoading, error] = useAuthState(auth);
+  const {
+    projects,
+    setProjects,
+    loading: projectLoading,
+    error: projectError,
+    setLoading,
+    setError,
+  } = useProjectContext();
 
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/");
+      navigate("/login");
     } catch (logoutError) {
       console.error("Logout failed:", logoutError.message);
-      alert("Atsijungimas nepavyko. Bandykite dar kartą.");
+      alert("Atsijungimas nepavyko. Bandykite dar tiesiogiai.");
+    }
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await deleteProject(projectId);
+      if (result.success) {
+        setProjects(projects.filter((project) => project.id !== projectId));
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (loading) return;
-    if (!user) navigate("/");
-  }, [loading, user, navigate]);
+    if (authLoading) return;
+    if (!user) navigate("/login");
+
+    if (user && user.displayName) {
+      const getProjects = async () => {
+        const result = await fetchUserProjects(user.displayName);
+        if (result.success) {
+          setProjects(result.projects);
+        } else {
+          console.error("Failed to fetch projects", result.error);
+        }
+      };
+
+      getProjects();
+    }
+  }, [authLoading, user, navigate, setProjects]);
+
+  if (authLoading || !user) {
+    return null;
+  }
 
   return (
-    <div className="home-screen">
-      <header className="home-screen__header">
-        <h1 className="home-screen__header-title">To Do List APP</h1>
-      </header>
-      {user ? (
-        <div className="home-screen__main-content">
-          <section className="home-screen__main-content-user-content">
-            <div className="home-screen__main-content-user-content-avatar-logout">
-              <img
-                src={userAvatar}
-                alt="Vartotojo avataras"
-                className="home-screen__main-content-user-content-avatar"
-                width="50"
-                height="50"
-              />
-            </div>
-            <div className="home-screen__main-content-user-content-info">
-              <p className="home-screen__main-content-user-content-info-text">
-              Sveiki atvykę, {user.displayName ? `${user.displayName}!` : 'Vartotojau!'}
-              </p>
-              <button
-                onClick={handleLogout}
-                className="home-screen__main-content-user-content-logout-btn"
-              >
-                Atsijungti
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : (
-        <main className="home-screen__main-content home-screen__main-content--split">
-          <section className="home-screen__main-content--split-left-section">
-            <h2 className="home-screen__main-content--split-left-section-title">
-              Sveiki atvykę į Užduočių tvarkyklę
-            </h2>
-            <p className="home-screen__main-content--split-left-section-description">
-              Čia galite efektyviai valdyti savo projektus ir užduotis.
+    <div className="home">
+      <main className="home__main">
+        <section className="home__user-section">
+          <div className="home__user-section-avatar">
+            <img
+              src={userAvatar}
+              alt="Vartotojo avataras"
+              width="50"
+              height="50"
+            />
+          </div>
+          <div className="home__user-section-info">
+            <p>
+              Sveiki atvykę,{" "}
+              {user.displayName ? `${user.displayName}!` : "Vartotojau!"}
             </p>
+            <button onClick={handleLogout}>Atsijungti</button>
+          </div>
+          <div className="home__actions"></div>
+        </section>
+        <section className="home__projects">
+          <h2 className="home__projects-title">Projektų sąrašas</h2>
+          <div className="home__projects-add-button">
+            <Link to="/create-project">
+              <button>Pridėti projektą</button>
+            </Link>
+          </div>
+          {projectLoading ? (
+            <p className="home__projects-loading">Kraunama...</p>
+          ) : projectError ? (
+            <p className="home__projects-error">{projectError}</p>
+          ) : projects.length > 0 ? (
+            <table className="home__projects-list">
+              <thead>
+                <tr>
+                  <th>Pavadinimas</th>
+                  <th>Aprašymas</th>
+                  <th>Pradžios data</th>
+                  <th>Pabaigos data</th>
+                  <th>Veiksmai</th>
+                </tr>
+              </thead>
+              <tbody>
+                {projects.map((project) => (
+                  <tr key={project.id}>
+                    <td>{project.name}</td>
+                    <td>{project.description || "Nenurodyta"}</td>
+                    <td>{project.startDate}</td>
+                    <td>{project.endDate}</td>
+                    <td>
+                      <button onClick={() => project.id}>Keisti</button>
+                      <button onClick={() => handleDeleteProject(project.id)}>
+                        Ištrinti
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="home__projects-empty">Kol kas projektų nėra.</p>
+          )}
+          <section className="home__features">
+            <h2>Funkcijos, kurios palengvina jūsų darbą:</h2>
+            <ul>
+              <li>Intuityvus projektų valdymas</li>
+              <li>Užduočių prioritetų nustatymas</li>
+              <li>Terminų sekimas</li>
+              <li>Bendradarbiavimas su komanda</li>
+            </ul>
           </section>
-
-          <section className="home-screen__main-content--split-right-section">
-            <h2 className="home-screen__main-content--split-right-section-title">
-              Supaprastinkite savo darbą
-            </h2>
-            <p className="home-screen__main-content--split-right-section-description">
-              Ar norite efektyviai valdyti savo projektus ir užduotis?
-            </p>
-            <div className="home-screen__main-content--split-right-section-buttons">
-              <Link to="/login">
-                <button className="home-screen__main-content--split-right-section-buttons-button">
-                  Prisijungti
-                </button>
-              </Link>
-              <Link to="/register">
-                <button className="home-screen__main-content--split-right-section-buttons-button">
-                  Registruotis
-                </button>
-              </Link>
-            </div>
-          </section>
-        </main>
-      )}
-
-      {error && <p className="home-screen__error">Klaida: {error.message}</p>}
+        </section>
+      </main>
+      {error && <p className="home__error">Klaida: {error}</p>}
     </div>
   );
 };

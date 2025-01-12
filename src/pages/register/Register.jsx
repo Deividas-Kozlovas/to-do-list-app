@@ -63,18 +63,15 @@ const Register = () => {
   };
 
   return (
-    <div className="user-screen">
-      <header className="user-screen__header">
-        <h1 className="user-screen__header-title">To Do List APP</h1>
-      </header>
-      <form onSubmit={handleRegister} className="user-screen__form">
-        <h2 className="user-screen__form-title">Registracija</h2>
+    <div className="register__wrapper">
+      <form onSubmit={handleRegister} className="register__form">
+        <h2 className="register__form-title">Registracija</h2>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="Vardas"
           required
           disabled={isLoading}
@@ -84,7 +81,7 @@ const Register = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="El. paštas"
           required
           disabled={isLoading}
@@ -94,7 +91,7 @@ const Register = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          className="user-screen__form-input"
+          className="register__form-input"
           placeholder="Slaptažodis"
           required
           disabled={isLoading}
@@ -117,17 +114,15 @@ const Register = () => {
             Jau turite paskyrą? Prisijunkite
           </Link>
         </div>
-        <div className="user-screen__form-link">
-          <Link to="/" className="user-screen__form-link-link">
+        <div>
+          <Link to="/" className="register__form-link">
             Grižti į pagridinį puslapį
           </Link>
         </div>
         {isLoading && (
-          <div className="user-screen__loader-container">
-            <div className="user-screen__loader"></div>
-            <span className="user-screen__loader-container-text">
-              Kraunama...
-            </span>
+          <div className="register__form-loading">
+            <div className="register__form-loading-spinner"></div>
+            <span className="register__form-loading-text">Kraunama...</span>
           </div>
         )}
       </form>

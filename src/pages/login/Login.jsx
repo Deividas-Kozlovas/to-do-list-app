@@ -27,11 +27,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const result = await login(formData.email, formData.password);
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-      navigate("/");
+      await login(formData.email, formData.password);
     } catch (err) {
       let errorMessage = "Įvyko klaida: ";
       if (err.message.includes("auth/too-many-requests")) {
@@ -56,31 +52,28 @@ const Login = () => {
   };
 
   return (
-    <div className="user-screen">
-      <header className="user-screen__header">
-        <h1 className="user-screen__header-title">To Do List APP</h1>
-      </header>
-      <form onSubmit={handleLogin} className="user-screen__form">
-        <h2 className="user-screen__form-title">Prisijungimas</h2>
+    <div className="login__wrapper">
+      <form onSubmit={handleLogin} className="login__form">
+        <h2 className="login__form-title">Prisijungimas</h2>
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="user-screen__form-input"
           placeholder="El. paštas adresas"
           required
           disabled={isLoading}
+          className="login__form-input"
         />
         <input
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          className="user-screen__form-input"
           placeholder="Slaptažodis"
           required
           disabled={isLoading}
+          className="login__form-input"
         />
         <button
           type="submit"
@@ -100,22 +93,20 @@ const Login = () => {
             Pamirštote slaptažodį?
           </Link>
         </div>
-        <div className="user-screen__form-link">
-          <Link to="/register" className="user-screen__form-link-link">
+        <div>
+          <Link to="/register" className="login__form-link">
             Neturite paskyros? Užsiregistruokite
           </Link>
         </div>
-        <div className="user-screen__form-link">
-          <Link to="/" className="user-screen__form-link-link">
+        <div>
+          <Link to="/" className="login__form-link">
             Grižti į pagrindinį puslapį
           </Link>
         </div>
         {isLoading && (
-          <div className="user-screen__loader-container">
-            <div className="user-screen__loader"></div>
-            <span className="user-screen__loader-container-text">
-              Palaukite...
-            </span>
+          <div className="login__form-loading">
+            <div className="login__form-loading-spinner"></div>
+            <span className="login__form-loading-text">Palaukite...</span>
           </div>
         )}
       </form>
