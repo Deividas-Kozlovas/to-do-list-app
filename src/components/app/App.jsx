@@ -7,7 +7,7 @@ import ResetPassword from "../../pages/password-reset/ResetPassword";
 import Home from "../../pages/home/Home";
 import CreateProject from "../../pages/project-create/CreateProject";
 
-import "./app.scss"
+import "./App.scss";
 
 function App() {
   return (
