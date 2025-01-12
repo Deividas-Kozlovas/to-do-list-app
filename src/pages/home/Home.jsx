@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react"; // Added useState here
 import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useProjectContext } from "../../context/ProjectContext";
+import Modal from "../../components/model/Modal";
 import {
   deleteProject,
   updateProjectService,
@@ -13,6 +14,8 @@ import "./home.scss";
 const Home = () => {
   const navigate = useNavigate();
   const [user, authLoading, error] = useAuthState(auth);
+  const [showModal, setShowModal] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
   const {
     projects,
     setProjects,
@@ -33,14 +36,24 @@ const Home = () => {
     }
   };
 
-  const handleDeleteProject = async (projectId) => {
+  const handleDeleteClick = (projectId) => {
+    setProjectToDelete(projectId);
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!projectToDelete) return;
+
     setLoading(true);
     setError(null);
 
     try {
-      const result = await deleteProject(projectId);
+      const result = await deleteProject(projectToDelete);
       if (result.success) {
-        setProjects(projects.filter((project) => project.id !== projectId));
+        setProjects(
+          projects.filter((project) => project.id !== projectToDelete)
+        );
+        setShowModal(false);
       } else {
         setError(result.error);
       }
@@ -49,6 +62,10 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
   };
 
   const handleToggleStatus = async (project) => {
@@ -139,7 +156,7 @@ const Home = () => {
                       >
                         Keisti
                       </button>
-                      <button onClick={() => handleDeleteProject(project.id)}>
+                      <button onClick={() => handleDeleteClick(project.id)}>
                         Ištrinti
                       </button>
                       <button onClick={() => handleToggleStatus(project)}>
@@ -164,6 +181,13 @@ const Home = () => {
           </section>
         </section>
       </main>
+      {showModal && (
+        <Modal
+          message="Ar tikrai norite istrinti uzduoti?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
       {error && <p className="home__error">Klaida: {error}</p>}
     </div>
   );
