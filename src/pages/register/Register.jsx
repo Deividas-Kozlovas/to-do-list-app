@@ -98,31 +98,28 @@ const Register = () => {
         />
         <button
           type="submit"
-          className="user-screen__form-button"
+          className="register__form-button"
           disabled={isLoading || !isCaptchaVerified}
         >
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
-        {error && <p className="user-screen__form-error">{error}</p>}
+        {error && <p className="register__form-error">{error}</p>}
         <ReCAPTCHA
           className="grecaptcha-badge"
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={onChange}
         />
-        <div className="user-screen__form-link">
-          <Link to="/login" className="user-screen__form-link-link">
-            Jau turite paskyrą? Prisijunkite
-          </Link>
-        </div>
         <div>
-          <Link to="/" className="register__form-link">
-            Grižti į pagridinį puslapį
+          <Link to="/login" className="register__form-link">
+            Jau turite paskyrą? Prisijunkite
           </Link>
         </div>
         {isLoading && (
           <div className="register__form-loading">
             <div className="register__form-loading-spinner"></div>
-            <span className="register__form-loading-text">Kraunama...</span>
+            <span className="register__form-loading-text">
+              Kraunama...
+            </span>
           </div>
         )}
       </form>

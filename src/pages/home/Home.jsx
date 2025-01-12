@@ -2,12 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth, logout } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 import { useProjectContext } from "../../context/ProjectContext";
-import {
-  fetchUserProjects,
-  deleteProject,
-} from "../../services/ProjectServices";
+import { fetchUserProjects, deleteProject } from "../../services/ProjectServices";
 import userAvatar from "../../assets/images/user-avatar.png";
 import "./home.scss";
 
@@ -78,7 +74,7 @@ const Home = () => {
       <main className="home__main">
         <section className="home__user-section">
           <div className="home__user-section-avatar">
-            <img
+            <img 
               src={userAvatar}
               alt="Vartotojo avataras"
               width="50"
@@ -87,12 +83,15 @@ const Home = () => {
           </div>
           <div className="home__user-section-info">
             <p>
-              Sveiki atvykę,{" "}
-              {user.displayName ? `${user.displayName}!` : "Vartotojau!"}
+              Sveiki atvykę, {user.displayName ? `${user.displayName}!` : "Vartotojau!"}
             </p>
-            <button onClick={handleLogout}>Atsijungti</button>
+            <button onClick={handleLogout}>
+              Atsijungti
+            </button>
           </div>
-          <div className="home__actions"></div>
+          <div className="home__actions">
+            
+          </div>
         </section>
         <section className="home__projects">
           <h2 className="home__projects-title">Projektų sąrašas</h2>
@@ -113,6 +112,7 @@ const Home = () => {
                   <th>Aprašymas</th>
                   <th>Pradžios data</th>
                   <th>Pabaigos data</th>
+                  <th>Prioritetas</th>
                   <th>Veiksmai</th>
                 </tr>
               </thead>
@@ -123,11 +123,10 @@ const Home = () => {
                     <td>{project.description || "Nenurodyta"}</td>
                     <td>{project.startDate}</td>
                     <td>{project.endDate}</td>
+                    <td>{project.priority}</td>
                     <td>
-                      <button onClick={() => project.id}>Keisti</button>
-                      <button onClick={() => handleDeleteProject(project.id)}>
-                        Ištrinti
-                      </button>
+                      <button onClick={() => navigate(`/edit-project/${project.id}`)}>Keisti</button>
+                      <button onClick={() => handleDeleteProject(project.id)}>Ištrinti</button>
                     </td>
                   </tr>
                 ))}

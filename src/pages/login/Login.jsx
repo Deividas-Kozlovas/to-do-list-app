@@ -78,19 +78,19 @@ const Login = () => {
         />
         <button
           type="submit"
-          className="user-screen__form-button"
           disabled={isLoading || !isCaptchaVerified}
+          className="login__form-button"
         >
           {isLoading ? "Prisijungiama..." : "Prisijungti"}
         </button>
-        {error && <p className="user-screen__form-error">{error}</p>}
+        {error && <p className="login__form-error">{error}</p>}
         <ReCAPTCHA
           className="grecaptcha-badge"
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={onChange}
         />
-        <div className="user-screen__form-link">
-          <Link to="/reset-password" className="user-screen__form-link-link">
+        <div>
+          <Link to="/reset-password" className="login__form-link">
             Pamirštote slaptažodį?
           </Link>
         </div>
@@ -99,15 +99,12 @@ const Login = () => {
             Neturite paskyros? Užsiregistruokite
           </Link>
         </div>
-        <div>
-          <Link to="/" className="login__form-link">
-            Grižti į pagrindinį puslapį
-          </Link>
-        </div>
         {isLoading && (
           <div className="login__form-loading">
             <div className="login__form-loading-spinner"></div>
-            <span className="login__form-loading-text">Palaukite...</span>
+            <span className="login__form-loading-text">
+              Palaukite...
+            </span>
           </div>
         )}
       </form>

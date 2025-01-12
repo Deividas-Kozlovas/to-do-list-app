@@ -46,58 +46,55 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="user-screen">
-      <header className="user-screen__header">
-        <h1 className="user-screen__header-title">To Do List APP</h1>
-      </header>
-      <form onSubmit={handleResetPassword} className="user-screen__form">
-        <h2 className="user-screen__form-title">Atkurti slaptažodį</h2>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="user-screen__form-input"
-          placeholder="El. pašto adresas"
-          required
-          disabled={isLoading || success}
-        />
-        <button
-          type="submit"
-          className="user-screen__form-button"
-          disabled={isLoading || success || !isCaptchaVerified}
-        >
-          {isLoading
-            ? "Siunčiama..."
-            : success
-            ? "Nurodymai išsiųsti!"
-            : "Atkurti slaptažodį"}
-        </button>
-        {error && <p className="user-screen__form-error">{error}</p>}
-        <ReCAPTCHA
-          className="grecaptcha-badge"
-          sitekey={RECAPTCHA_SITE_KEY}
-          onChange={onChange}
-        />
-        {success && (
-          <p className="user-screen__form-success">
-            Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti
-            slaptažodį.
-          </p>
-        )}
-        <div className="user-screen__form-link">
-          <Link to="/login" className="user-screen__form-link-link">
-            Grižti prie prisijungimo
-          </Link>
-        </div>
-        {isLoading && (
-          <div className="user-screen__loader-container">
-            <div className="user-screen__loader"></div>
-            <span className="user-screen__loader-container-text">
-              Siunčiama...
-            </span>
+    <div className="reset-password__wrapper">
+        <form onSubmit={handleResetPassword} className="reset-password__form">
+          <h2 className="reset-password__form-title">Atkurti slaptažodį</h2>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="El. pašto adresas"
+            required
+            className="reset-password__form-input"
+            disabled={isLoading || success}
+          />
+          <button
+            type="submit"
+            className="reset-password__form-button"
+            disabled={isLoading || success || !isCaptchaVerified}
+          >
+            {isLoading
+              ? "Siunčiama..."
+              : success
+              ? "Nurodymai išsiųsti!"
+              : "Atkurti slaptažodį"}
+          </button>
+          {error && <p className="reset-password__form-error">{error}</p>}
+          <ReCAPTCHA
+            className="grecaptcha-badge"
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={onChange}
+          />
+          {success && (
+            <p className="reset-password__form-success">
+              Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti
+              slaptažodį.
+            </p>
+          )}
+          <div>
+            <Link to="/login" className="reset-password__form-link">
+              Grižti prie prisijungimo
+            </Link>
           </div>
-        )}
-      </form>
+          {isLoading && (
+            <div className="reset-password__form-loading">
+              <div className="reset-password__form-loading-spinner"></div>
+              <span className="reset-password__form-loading-text">
+                Siunčiama...
+              </span>
+            </div>
+          )}
+        </form>
     </div>
   );
 };
