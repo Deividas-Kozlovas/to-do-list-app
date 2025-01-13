@@ -25,6 +25,9 @@ jobs:
           echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
           echo "VITE_RECAPTCHA_SITE_KEY=${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" >> .env
 
+      - name: Debug environment variables
+        run: cat .env # Add this for debugging purposes
+
       - name: Build the project
         run: npm run build
 
