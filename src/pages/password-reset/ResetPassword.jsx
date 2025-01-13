@@ -70,11 +70,11 @@ const ResetPassword = () => {
             : "Atkurti slaptažodį"}
         </button>
         {error && <p className="reset-password__form-error">{error}</p>}
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           className="grecaptcha-badge"
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={onChange}
-        />
+        /> */}
         {success && (
           <p className="reset-password__form-success">
             Patikrinkite savo el. paštą, kur rasite instrukcijas, kaip atkurti

@@ -84,11 +84,11 @@ const Login = () => {
           {isLoading ? "Prisijungiama..." : "Prisijungti"}
         </button>
         {error && <p className="login__form-error">{error}</p>}
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           className="grecaptcha-badge"
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={onChange}
-        />
+        /> */}
         <div>
           <Link to="/reset-password" className="login__form-link">
             Pamirštote slaptažodį?

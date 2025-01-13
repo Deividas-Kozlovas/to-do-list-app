@@ -104,11 +104,11 @@ const Register = () => {
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>
         {error && <p className="register__form-error">{error}</p>}
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           className="grecaptcha-badge"
           sitekey={RECAPTCHA_SITE_KEY}
           onChange={onChange}
-        />
+        /> */}
         <div>
           <Link to="/login" className="register__form-link">
             Jau turite paskyrą? Prisijunkite
