@@ -78,7 +78,7 @@ const Login = () => {
         />
         <button
           type="submit"
-          disabled={isLoading || !isCaptchaVerified}
+          disabled={isLoading}
           className="login__form-button"
         >
           {isLoading ? "Prisijungiama..." : "Prisijungti"}

@@ -7,7 +7,7 @@ import Modal from "../../components/model/Modal";
 import ProjectTable from "../../components/projectTable/ProjectTable";
 import ProjectFilter from "../../components/projectFilter/ProjectFilter";
 import {
-  deleteProject,
+  deleteProjectService,
   updateProjectService,
 } from "../../services/ProjectServices";
 import userAvatar from "../../assets/images/user-avatar.png";
@@ -32,6 +32,7 @@ const Home = () => {
     setLoading,
     setError,
     updateProjectStatus,
+    deleteProject,
   } = useProjectContext();
 
   const filteredProjects = projects.filter((project) => {
@@ -79,11 +80,11 @@ const Home = () => {
     setError(null);
 
     try {
-      const result = await deleteProject(projectToDelete);
+      deleteProject(projectToDelete);
+
+      const result = await deleteProjectService(projectToDelete);
+
       if (result.success) {
-        setProjects(
-          projects.filter((project) => project.id !== projectToDelete)
-        );
         setShowModal(false);
       } else {
         setError(result.error);

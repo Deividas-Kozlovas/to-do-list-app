@@ -6,6 +6,13 @@ export const reducer = (state, action) => {
       return { ...state, error: action.payload };
     case "SET_PROJECTS":
       return { ...state, projects: action.payload };
+    case "DELETE_PROJECT":
+      return {
+        ...state,
+        projects: state.projects.filter(
+          (project) => project.id !== action.payload
+        ),
+      };
     case "CREATE_PROJECT":
       return {
         ...state,

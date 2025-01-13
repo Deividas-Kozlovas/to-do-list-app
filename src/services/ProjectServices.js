@@ -54,7 +54,7 @@ export const fetchUserProjects = async (userId) => {
   }
 };
 
-export const deleteProject = async (projectId) => {
+export const deleteProjectService = async (projectId) => {
   try {
     await deleteDoc(doc(db, "Projektai", projectId));
     return { success: true };

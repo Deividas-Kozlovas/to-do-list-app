@@ -61,7 +61,7 @@ const ResetPassword = () => {
         <button
           type="submit"
           className="reset-password__form-button"
-          disabled={isLoading || success || !isCaptchaVerified}
+          disabled={isLoading || success}
         >
           {isLoading
             ? "Siunčiama..."

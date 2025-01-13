@@ -34,15 +34,7 @@ const ProjectProvider = ({ children }) => {
   };
 
   const deleteProject = async (id) => {
-    try {
-      dispatch({ type: SET_LOADING, payload: true });
-      await deleteDoc(doc(db, "Projektai", id));
-      dispatch({ type: DELETE_PROJECT, payload: id });
-    } catch (error) {
-      dispatch({ type: SET_ERROR, payload: error.message });
-    } finally {
-      dispatch({ type: SET_LOADING, payload: false });
-    }
+    dispatch({ type: DELETE_PROJECT, payload: id });
   };
 
   const updateProject = (projectId, updatedProjectData) => {

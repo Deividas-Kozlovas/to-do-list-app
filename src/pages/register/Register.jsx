@@ -99,7 +99,7 @@ const Register = () => {
         <button
           type="submit"
           className="register__form-button"
-          disabled={isLoading || !isCaptchaVerified}
+          disabled={isLoading}
         >
           {isLoading ? "Registruojama..." : "Registruotis"}
         </button>

@@ -15,7 +15,7 @@ function App() {
   return (
     <ProjectProvider>
       {" "}
-      <Router basename="/to-do-list-app">
+      <Router>
         <header className="App-header">
           <h1 className="App-header-title">To Do List APP</h1>
         </header>
