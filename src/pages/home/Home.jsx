@@ -25,7 +25,7 @@ const Home = () => {
   });
 
   const {
-    projects,
+    projects = [],
     setProjects,
     loading: projectLoading,
     error: projectError,

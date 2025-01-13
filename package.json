@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Deividas-Kozlovas.github.io/to-do-list-app", 
+ "homepage": "https://Deividas-Kozlovas.github.io/to-do-list-app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -11,7 +11,7 @@ const EditProject = () => {
   const { projectId } = useParams();
   const [user, loading] = useAuthState(auth);
   const {
-    projects,
+    projects = [],
     setLoading,
     setError,
     updateProject,
